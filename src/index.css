@@ -71,3 +71,14 @@
   }
   
   
+  .autoBLur {
+    filter: blur(10px);
+    transition: filter 0.8s ease-out;
+    opacity: 0.2;
+  }
+  
+  .autoBLur.show {
+    filter: blur(0);
+    opacity: 1;
+  }
+  

@@ -38,13 +38,13 @@ const MobileMenu = ({ onClose }) => {
       {/* Buttons */}
       <div className="flex flex-col gap-4 mt-8">
         <Link to="/login" onClick={onClose}>
-          <span className="px-5 py-2 transition border border-white rounded-full text-slate-200 hover:bg-white hover:text-black w-fit">
+          <span className="px-5 py-2 transition border border-white rounded-full text-slate-200 hover:bg-white hover:text-black w-fit bg-slate-900">
             Login
           </span>
         </Link>
         <div></div>
         <Link to="/register" onClick={onClose}>
-          <span className="px-5 py-2 transition border border-white rounded-full text-slate-200 hover:bg-white hover:text-black w-fit">
+          <span className="px-5 py-2 transition border border-white rounded-full text-slate-200 hover:bg-white hover:text-black w-fit bg-slate-900">
             Register
           </span>
         </Link>
