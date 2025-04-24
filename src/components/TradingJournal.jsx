@@ -76,56 +76,57 @@ const TradingJournal = () => {
 
     return (
       <div
-        key={index}
-        className={`relative w-full h-18 rounded-lg p-2 text-sm flex flex-col items-center justify-center overflow-hidden
-          ${
-            type === "gain"
-              ? "bg-green-300 border border-green-400 text-black"
-              : type === "loss"
-              ? "bg-red-300 border border-red-400 text-black"
-              : type === "logo"
-              ? "bg-gray-300 border border-gray-400 text-black"
-              : type === "inactive"
-              ? "bg-[#1a1e24] text-gray-400 border border-[#2d3239]"
-              : type === "blank"
-              ? "bg-transparent text-gray-400 border border-[#22262b]"
-              : "bg-transparent border border-[#22262b] text-white"
-          }`}
-      >
-        <p className="absolute top-0 left-0 px-2 text-xs">{dayNum}</p>
-
-        {(type === "gain" || type === "loss" || type === "inactive" || type === "logo") && (
-          <div className="absolute top-0 right-0 w-0 h-0">
-            <div className="absolute top-0 right-0 w-0 h-0 border-t-[34px] border-l-[34px] border-t-black/80 border-l-transparent"></div>
-            <div className="absolute top-[4px] right-[4px] z-10">
-              {type === "gain" && <FaCheck size={10} className="text-green-400" />}
-              {type === "loss" && <FaTimes size={10} className="text-red-500" />}
-            </div>
+      key={index}
+      className={`relative w-full min-h-[70px] sm:min-h-[80px] md:min-h-[90px] lg:min-h-[100px] rounded-lg p-2 sm:p-3 text-xs sm:text-sm md:text-base flex flex-col items-center justify-center overflow-hidden
+        ${
+          type === "gain"
+            ? "bg-green-300 border border-green-400 text-black"
+            : type === "loss"
+            ? "bg-red-300 border border-red-400 text-black"
+            : type === "logo"
+            ? "bg-gray-300 border border-gray-400 text-black"
+            : type === "inactive"
+            ? "bg-[#1a1e24] text-gray-400 border border-[#2d3239]"
+            : type === "blank"
+            ? "bg-transparent text-gray-400 border border-[#22262b]"
+            : "bg-transparent border border-[#22262b] text-white"
+        }`}
+    >
+      <p className="absolute top-0 left-0 px-2 text-[0.65rem] sm:text-xs">{dayNum}</p>
+    
+      {(type === "gain" || type === "loss" || type === "inactive" || type === "logo") && (
+        <div className="absolute top-0 right-0 w-0 h-0">
+          <div className="absolute top-0 right-0 w-0 h-0 border-t-[34px] border-l-[34px] border-t-black/80 border-l-transparent"></div>
+          <div className="absolute top-[4px] right-[4px] z-10">
+            {type === "gain" && <FaCheck size={10} className="text-green-400" />}
+            {type === "loss" && <FaTimes size={10} className="text-red-500" />}
           </div>
-        )}
-
-        {type === "gain" && (
-          <>
-            <p className="text-[0.8rem] font-bold mt-4">9.50%</p>
-            <p className="text-[0.7rem] font-bold">USD</p>
-            <p className="text-[0.6rem]">Trades: 3</p>
-          </>
-        )}
-        {type === "loss" && (
-          <>
-            <p className="text-[0.8rem] font-bold mt-4">-8.50%</p>
-            <p className="text-[0.7rem] font-bold">USD</p>
-            <p className="text-[0.6rem]">Trades: 3</p>
-          </>
-        )}
-        {type === "inactive" && (
-          <>
-            <p className="mt-4 text-sm opacity-70">0.00%</p>
-            <p className="text-sm opacity-70">USD</p>
-          </>
-        )}
-        {type === "logo" && <img src={logo} alt="logo" className="w-12 opacity-70" />}
-      </div>
+        </div>
+      )}
+    
+      {type === "gain" && (
+        <>
+          <p className="font-bold mt-4 text-[0.75rem] sm:text-[0.85rem] md:text-base">9.50%</p>
+          <p className="font-bold text-[0.65rem] sm:text-[0.75rem] md:text-sm">USD</p>
+          <p className="text-[0.6rem] sm:text-[0.7rem] md:text-sm">Trades: 3</p>
+        </>
+      )}
+      {type === "loss" && (
+        <>
+          <p className="font-bold mt-4 text-[0.75rem] sm:text-[0.85rem] md:text-base">-8.50%</p>
+          <p className="font-bold text-[0.65rem] sm:text-[0.75rem] md:text-sm">USD</p>
+          <p className="text-[0.6rem] sm:text-[0.7rem] md:text-sm">Trades: 3</p>
+        </>
+      )}
+      {type === "inactive" && (
+        <>
+          <p className="mt-4 text-[0.75rem] sm:text-sm opacity-70">0.00%</p>
+          <p className="text-[0.65rem] sm:text-sm opacity-70">USD</p>
+        </>
+      )}
+      {type === "logo" && <img src={logo} alt="logo" className="w-8 sm:w-10 md:w-12 opacity-70" />}
+    </div>
+    
     );
   };
 
@@ -158,7 +159,7 @@ const TradingJournal = () => {
         </div>
 
         {/* RIGHT SECTION */}
-        <div className="col-span-1 mb-2 space-y-6">
+        <div className="col-span-1 px-4 mb-2 space-y-6 md:px-0">
           <h3 className="pb-2 text-lg font-bold text-white border-b border-slate-900">
             SLT-Straight Line Trading
           </h3>
@@ -268,7 +269,7 @@ const TradingJournal = () => {
 
           <button
             onClick={handleClick}
-            className="px-4 py-2 text-sm font-bold uppercase transition duration-200 border-2 rounded-lg bg-amber-400 hover:bg-amber-500 text-amber-900 hover:text-amber-100 border-amber-300 w-fit"
+            className="px-4 py-2 text-sm font-bold uppercase transition duration-200 border-2 rounded-lg mx-11 bg-amber-400 hover:bg-amber-500 text-amber-900 hover:text-amber-100 border-amber-300 w-fit md:mx-0"
           >
             {showPlanner ? " SELECT THE DAY FOR WITHDRAWAL " : "WITHDRAWAL PLANNER"}
           </button>
