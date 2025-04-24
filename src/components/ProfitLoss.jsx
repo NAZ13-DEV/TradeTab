@@ -19,7 +19,7 @@ ChartJS.register(
   BarElement
 );
 
-const ProfitLoss = () => {
+const  ProfitLoss = () => {
   const data = {
     labels: ["Short Won", "Long Won"],
     datasets: [
@@ -160,7 +160,7 @@ const ProfitLoss = () => {
   
 
   return (
-    <div className="relative grid w-full max-w-full grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-12">
+    <div className="relative grid w-full max-w-full grid-cols-1 gap-4 px-4 md:grid-cols-1 lg:grid-cols-12 md:px-0">
 
            {/* 🔽 SINGLE OVERLAY applied to container */}
            <div

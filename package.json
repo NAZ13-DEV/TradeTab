@@ -4,28 +4,36 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@hookform/resolvers": "^5.0.1",
     "@tailwindcss/postcss": "^4.1.4",
     "aos": "^2.3.4",
     "chart.js": "^4.4.9",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "classnames": "^2.5.1",
+    "country-list": "^2.3.0",
+    "formik": "^2.4.6",
     "framer-motion": "^12.7.4",
     "lucide-react": "^0.488.0",
     "plotly.js": "^3.0.1",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.56.1",
     "react-icons": "^5.5.0",
+    "react-phone-input-2": "^2.15.1",
     "react-plotly.js": "^2.6.0",
     "react-router-dom": "^7.5.0",
     "react-toastify": "^11.0.5",
-    "tailwind-scrollbar": "^3.1.0"
+    "tailwind-scrollbar": "^3.1.0",
+    "world-countries": "^5.1.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

@@ -82,3 +82,31 @@
     opacity: 1;
   }
   
+  /* Remove arrows in Chrome, Safari, Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove arrows in Firefox */
+input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+option {
+  @apply text-sm md:text-base lg:text-lg;
+}
+select {
+  @apply text-sm md:text-base lg:text-lg;
+}
+
+
+.bg-cover {
+  background-size: cover;
+}
+
+.bg-login {
+  background-image: url(./img/login_bg.png);
+}

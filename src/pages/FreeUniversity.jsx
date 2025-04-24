@@ -1,7 +1,12 @@
+import Navbar from "../components/Navbar"
+import TradeTabUniversity from "../components/TradeTabUniversity"
 
 const FreeUniversity = () => {
   return (
-    <div>FreeUniversity</div>
+    <div className="min-h-screen overflow-x-hidden text-white bg-slate-900 ">
+      <Navbar />
+      <TradeTabUniversity/>
+    </div>
   )
 }
 

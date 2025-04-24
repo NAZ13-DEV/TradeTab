@@ -14,6 +14,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import PageNotFound from "./pages/PageNotFound";
 import EmotionalEvaluation from "./pages/EmotionalEvaluation";
 import 'aos/dist/aos.css';
+import ScrollToTop from "./components/ScrollToTop";
 
 
 
@@ -29,6 +30,7 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
+      <ScrollToTop/>
       <Routes>
         <Route index element={<Home/>} />
         <Route path="/home" element={<Home/>} />

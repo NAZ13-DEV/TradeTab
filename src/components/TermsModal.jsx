@@ -17,7 +17,7 @@ const TermsModal = ({ onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center h-full p-1 overflow-y-auto bg-transparent modal backdrop-blur-lg"
+      className="fixed inset-0 z-50 flex items-center justify-center h-full p-1 px-6 overflow-y-auto bg-transparent modal backdrop-blur-lg md:px-0"
       id="multi-step-modal"
     >
       <div

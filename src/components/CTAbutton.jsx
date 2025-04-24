@@ -1,11 +1,13 @@
-
 const CTAButtons = () => {
   return (
-    <div className="flex items-center justify-center gap-4 px-4 py-8 sm:flex-row ">
-      <p className="text-lg font-semibold text-white transition-all duration-300 ease-in-out bg-teal-500 rounded md:px-24 md:py-2 md:rounded-xl hover:py-3 hoverounded-sm">
+    <div className="flex flex-col items-center justify-center w-full gap-4 px-4 py-10 sm:flex-row sm:gap-6 md:gap-10">
+      {/* First CTA */}
+      <p className="w-full px-6 py-3 text-sm font-semibold text-center text-white transition-all duration-300 ease-in-out bg-teal-500 rounded-lg sm:text-base md:text-lg sm:w-auto sm:px-10 sm:py-3 hover:bg-teal-600 hover:shadow-lg">
         New to Trading? Start Here!
       </p>
-      <p className="text-lg font-semibold text-white transition-all duration-300 ease-in-out rounded md:px-24 md:py-2 md:rounded-xl bg-gradient-to-r from-blue-500 to-teal-500 hover:py-3 hoverounded-sm ">
+
+      {/* Second CTA */}
+      <p className="w-full px-6 py-3 text-sm font-semibold text-center text-white transition-all duration-300 ease-in-out rounded-lg sm:text-base md:text-lg bg-gradient-to-r from-blue-500 to-teal-500 sm:w-auto sm:px-10 sm:py-3 hover:from-blue-600 hover:to-teal-600 hover:shadow-lg">
         Add Your Account For Free!
       </p>
     </div>

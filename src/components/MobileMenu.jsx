@@ -5,13 +5,13 @@ import Logo from "../img/logo_1.png";
 
 const MobileMenu = ({ onClose }) => {
   return (
-    <div className="fixed inset-0 z-50 flex flex-col w-full max-w-xs p-6 text-white backdrop-blur-lg">
+    <div className="fixed inset-0 z-50 flex flex-col w-full max-w-xs p-6 text-white backdrop-blur-lg" data-aos="fade-right">
       {/* Top bar */}
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-2">
+        <Link to={"/home"} className="flex items-center space-x-2 text-lg font-bold">
           <img src={Logo} alt="TradeTab logo" className="w-8 h-8" />
-          <span className="text-lg font-bold text-green-400">TradeTab</span>
-        </div>
+          <span className="text-green-400 ">Trade</span>Tab
+        </Link>
         <button onClick={onClose} aria-label="Close menu">
           <X className="w-6 h-6" />
         </button>
@@ -24,7 +24,6 @@ const MobileMenu = ({ onClose }) => {
           ["Metrics", "/metrics"],
           ["Journal", "/journal"],
           ["Forex Calculator", "/forexCalculator"],
-          ["Brokers", "/brokers"],
           ["Free University", "/freeUniversity"],
         ].map(([label, path]) => (
           <li key={path}>

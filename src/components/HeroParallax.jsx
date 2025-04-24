@@ -3,7 +3,7 @@ import HeroBg from "../img/bg1dark.png";
 
 const HeroParallax = () => {
   return (
-    <div className="relative flex items-center justify-center min-h-screen px-4 py-16 overflow-hidden bg-slate-950 md:px-10 lg:py-32">
+    <div className="relative flex items-center justify-center min-h-screen px-4 py-16 overflow-hidden bg-slate-950 md:px-10 lg:py-16">
       {/* Background Image with dark overlay */}
       <div className="absolute inset-0 z-0">
         {/* Overlay */}

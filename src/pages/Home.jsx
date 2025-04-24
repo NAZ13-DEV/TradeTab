@@ -16,7 +16,7 @@ import Heroes from './Heroes';
 
 const Home = () => {
   return (
-    <div className='min-h-screen overflow-x-hidden text-white '>
+    <div className='min-h-screen overflow-x-hidden text-white bg-slate-900 '>
       <Navbar  />
       <Heroes />
 

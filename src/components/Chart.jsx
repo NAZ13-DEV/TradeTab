@@ -66,7 +66,7 @@ const Chart = () => {
   }, [activeTab]);
 
   return (
-    <div className="grid grid-cols-12 gap-4">
+    <div className="grid grid-cols-12 gap-4 px-4 md:px-0">
       <div className="col-span-12 md:col-span-8">
         <div className="w-full h-full min-h-[400px] rounded-2xl bg-gradient-to-t from-cyan-700 via-transparent to-transparent border border-cyan-800 hover:border-cyan-500 ease-in-out duration-300 flex flex-col p-4">
           <div className="grid items-center justify-between w-full grid-cols-12 text-white border-b border-b-darkblack-500">
