@@ -109,7 +109,7 @@ const LoginSection = () => {
 
             {/* Forgot Password */}
             <div className="flex items-center justify-between mt-2">
-              <Link to="/forgot-password" className="text-sm text-teal-400 hover:underline">
+              <Link to="/ForgotPassword" className="text-sm text-teal-400 hover:underline">
                 Forgot your password?
               </Link>
             </div>
