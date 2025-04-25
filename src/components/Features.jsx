@@ -3,7 +3,6 @@ const features = [
   { label: 'Free Journal', icon: '📝', path: '/journal' },
   { label: 'Free Education', icon: '🎓', path: '/freeUniversity' },
   { label: 'Emotional Evaluation', icon: '🧠', path: '/emotionalEvaluation' },
-  { label: 'Verified Broker Reviews', icon: '✅', path: '/brokers' }, 
   { label: 'Free Forex Calculator', icon: '📊', path: '/forexCalculator' },
 ];
 

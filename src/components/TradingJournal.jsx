@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import logo from "../img/logo_light.png";
 import { FaCheck, FaTimes } from "react-icons/fa";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 
 const TradingJournal = () => {
   const [showPlanner, setShowPlanner] = useState(false);
@@ -139,7 +138,15 @@ const TradingJournal = () => {
 
   return (
     <main className="w-full min-h-[80vh] px-2 md:px-12 md:py-58  bg-[#040e18]">
-      <ToastContainer />
+       <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: "#041F3E",
+            color: "#fff",
+          },
+        }}
+      />
       <div className="h-20 md:h-0 lg:h-20" />
       <div className="grid grid-cols-1 gap-4 mt-4 md:grid-cols-3 md:pt-44 lg:pt-0">
         {/* LEFT SECTION - CALENDAR */}

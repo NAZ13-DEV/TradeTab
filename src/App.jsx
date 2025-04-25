@@ -1,21 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
-import AOS from 'aos';
+import AOS from "aos";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import 'aos/dist/aos.css';
+import "aos/dist/aos.css";
+import { Toaster } from "react-hot-toast";
 
 import Home from "./pages/Home";
 import Metrics from "./pages/Metrics";
 import Journal from "./pages/Journal";
 import ForexCalculator from "./pages/ForexCalculator";
-import Brokers from "./pages/Brokers";
 import FreeUniversity from "./pages/FreeUniversity";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import PageNotFound from "./pages/PageNotFound";
-import EmotionalEvaluation from "./pages/EmotionalEvaluation";
 import ScrollToTop from "./components/ScrollToTop";
+import EmotionalEvaluation from "./pages/EmotionalEvaluation";
 
 const App = () => {
   useEffect(() => {
@@ -46,6 +47,15 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              background: "#041F3E", // black background
+              color: "#fff", // white text
+            },
+          }}
+        />
         <ScrollToTop />
         <Routes>
           <Route index element={<Home />} />
@@ -53,12 +63,12 @@ const App = () => {
           <Route path="/metrics" element={<Metrics />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/forexCalculator" element={<ForexCalculator />} />
-          <Route path="/brokers" element={<Brokers />} />
           <Route path="/freeUniversity" element={<FreeUniversity />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
-          <Route path="/emotionalEvaluation" element={<EmotionalEvaluation />} />
+          <Route path="/emotionalEvaluation" element={<EmotionalEvaluation />}/>
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

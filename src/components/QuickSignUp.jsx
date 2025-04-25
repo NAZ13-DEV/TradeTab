@@ -4,8 +4,7 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 import countries from "country-list";
 import videoPlaceholder from "../img/video_ph3.png";
 import { Eye, EyeOff,Mail,Lock } from "lucide-react";
@@ -85,7 +84,15 @@ const QuickSignupSection = () => {
 
   return (
     <main className="flex justify-center px-4 py-16 md:py-24 lg:py-32">
-      <ToastContainer />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: "#041F3E",
+            color: "#fff",
+          },
+        }}
+      />
       <div className="grid w-full grid-cols-1 gap-10 pt-8 md:grid-cols-2 max-w-7xl md:pt-32 lg:pt-20">
         {/* Left Video Section */}
         <div className="relative flex items-center justify-center w-full overflow-hidden rounded-2xl">

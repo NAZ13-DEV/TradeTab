@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Mail } from "lucide-react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-hot-toast";
 import logoLight from "../img/logo_light.png";
 
 const ForgotPasswordSection = () => {
@@ -13,6 +12,8 @@ const ForgotPasswordSection = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    const loadingToast = toast.loading("Sending reset instructions...");
+
     try {
       const response = await fetch("https://your-api-link.com/forgot-password", {
         method: "POST",
@@ -21,6 +22,8 @@ const ForgotPasswordSection = () => {
       });
 
       const result = await response.json();
+      toast.dismiss(loadingToast);
+
       if (!response.ok) {
         toast.error(result.message || "Something went wrong.");
       } else {
@@ -28,14 +31,13 @@ const ForgotPasswordSection = () => {
         reset();
       }
     } catch {
+      toast.dismiss(loadingToast);
       toast.error("Network error. Please try again.");
     }
   };
 
   return (
     <div className="w-full px-4 py-32 md:py-52 md:px-16 lg:py-36">
-      <ToastContainer position="top-right" />
-
       <div className="flex flex-col items-center justify-center gap-10 mx-auto md:flex-row md:gap-12 lg:gap-20 max-w-7xl">
         {/* Left Section */}
         <div className="w-full text-center md:w-1/2 md:text-left">
