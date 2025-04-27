@@ -69,7 +69,8 @@ const Navbar = () => {
        {/* Center Login & Register */}
        <div className="justify-center hidden gap-4 mt-4 md:flex">
          <Link to="/login">
-           <div className="flex items-center px-4 py-2 text-gray-300 transition bg-gray-800 border rounded-full border-gray-400/50 hover:scale-105">
+           <div className="flex items-center px-4 py-2 text-gray-300 transition bg-gray-800 rounded-full border-gray-400/50 "
+           >
              <svg
                stroke="currentColor"
                fill="currentColor"
