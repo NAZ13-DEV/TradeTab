@@ -19,7 +19,7 @@ const IndicatorsSection = () => {
               The <span className="text-teal-500">right indicators</span> to evaluate
             </p>
             <p className="text-base leading-relaxed text-white sm:text-lg autoShow">
-              Evaluate your trading performance like never before. Dive into advanced metrics, spot patterns in your trading behaviour, and uncover actionable insights. With TradeTab, you can identify what's working, pinpoint areas for improvement, and make data-driven decisions to refine your strategy.
+              {`Evaluate your trading performance like never before. Dive into advanced metrics, spot patterns in your trading behaviour, and uncover actionable insights. With Crown Exchange, you can identify what's working, pinpoint areas for improvement, and make data-driven decisions to refine your strategy.`}
             </p>
           </div>
         </div>

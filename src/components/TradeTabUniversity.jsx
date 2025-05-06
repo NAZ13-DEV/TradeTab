@@ -12,7 +12,7 @@ const TradeTabUniversity = () => {
                 GO TO YOUR ACCOUNT ON
               </p>
               <h1 className="text-3xl font-bold leading-tight tracking-wide text-white sm:text-4xl md:text-5xl">
-                TRADETAB{' '}
+                CROWN EXCHANGE{' '}
                 <span className="block text-4xl text-teal-500 sm:text-5xl md:text-6xl">
                   UNIVERSITY
                 </span>

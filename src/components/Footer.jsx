@@ -43,7 +43,7 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="flex flex-col items-center justify-between pt-4 mt-6 border-t border-gray-200 lg:my-10 md:flex-row">
           <p className="text-sm text-center md:text-left">
-            © 2024 TradeTab. All Rights Reserved.
+          © {new Date().getFullYear()} Crown Exchange. All Rights Reserved.
           </p>
           <button
             className="items-center hidden text-teal-600 transition-colors hover:text-white lg:flex"

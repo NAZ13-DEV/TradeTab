@@ -1,0 +1,107 @@
+html {
+  width: 100%;
+}
+
+body {
+  overflow-x: hidden !important;
+}
+
+body.show-spinner > main {
+  overflow: hidden !important;
+}
+
+/* Hide everything under body tag */
+body.show-spinner > * {
+  opacity: 0;
+}
+
+/* Spinner */
+body.show-spinner::after {
+  content: " ";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  border-top-color: rgba(0, 0, 0, 0.3);
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+  left: calc(50% - 15px);
+  top: calc(50% - 15px);
+  position: fixed;
+  z-index: 1;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+.load {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  color: #ffffff;
+  background: conic-gradient(from 90deg at 3px 3px, #0000 90deg, currentColor 0) -3px -3px /
+    calc(50% + 1.5px) calc(50% + 1.5px);
+  animation: l28 2s infinite;
+}
+
+.load::before,
+.load::after {
+  content: "";
+  grid-area: 1/1;
+  background: repeating-conic-gradient(#0000 0 35deg, currentColor 0 90deg);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 3px), #000 0);
+  border-radius: 50%;
+}
+
+.load::after {
+  margin: 20%;
+}
+
+@keyframes l28 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.load1 {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  color: #ffffff;
+  /* background: conic-gradient(from 90deg at 3px 3px, #0000 90deg, currentColor 0) -3px -3px /
+    calc(50% + 1.5px) calc(50% + 1.5px); */
+  animation: l28 2s infinite;
+}
+
+.load1::before,
+.load1::after {
+  content: "";
+  grid-area: 1/1;
+  background: repeating-conic-gradient(#0000 0 35deg, currentColor 0 90deg);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 3px), #000 0);
+  border-radius: 50%;
+}
+
+.load1::after {
+  margin: 20%;
+}
+
+@keyframes l28 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.btn-style-1:before {
+  content: var(--before-content, "\e932");
+  background: var(--before-background, white);
+}

@@ -1,11 +1,13 @@
 import mt4Logo from "../img/mt45-logo.png";
-import logoLight from "../img/logo_light.png";
+// import logoLight from "../img/logo_light.png";
 import globe from "../img/globe.png";
+import BigLogo from "../img/BigLogoIcon.png";
+
 
 const pins = [
   { top: "35%", left: "27%", city: "New York City", country: "USA" },
   { top: "45%", left: "17%", city: "Mexico City", country: "Mexico" },
-  { top: "37%", left: "90%", city: "Tokyo", country: "Japan" },
+  { top: "37%", left: "77%", city: "Tokyo", country: "Japan" },
   { top: "33%", left: "45%", city: "London", country: "U.K." },
   { top: "70%", left: "87%", city: "Melbourne", country: "Australia" },
   { top: "59%", left: "55%", city: "Cape Town", country: "South Africa" },
@@ -31,7 +33,7 @@ const WhyChooseUs = () => {
         {/* Title */}
         <div className="flex flex-col items-center mb-20 text-center">
           <p className="mb-4 text-5xl font-bold text-white">Why Choose Us</p>
-          <p className="text-xl text-slate-200">TradeTab WorldWide Reach</p>
+          <p className="text-xl text-slate-200">Crown Exchange WorldWide Reach</p>
         </div>
 
         {/* Logos and Animated Line */}
@@ -49,7 +51,7 @@ const WhyChooseUs = () => {
 
           {/* Logo 2 */}
           <div className="relative z-10">
-            <img src={logoLight} alt="TradeTab" className="w-24" />
+            <img src={BigLogo} alt="TradeTab" className="w-24" />
           </div>
         </div>
 

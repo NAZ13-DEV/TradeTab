@@ -117,7 +117,7 @@ const  ProfitLoss = () => {
     datasets: [
       {
         label: "Trade",
-        data: [60.7, 39.3],
+        data: [85, 15],
         backgroundColor: ["#12C918", "#E92525"], // green, red
         borderColor: "transparent",
         offset: "8", // same as chart background to create a break
@@ -126,7 +126,7 @@ const  ProfitLoss = () => {
   };
   
   const options2 = {
-    rotation: -90, // start from top
+    rotation: -150, // start from top
     circumference: 360,
     cutout: "40%",
     plugins: {
@@ -137,7 +137,7 @@ const  ProfitLoss = () => {
         color: "#ffffff",
         font: {
           weight: "bold",
-          size: 14,
+          size: 18,
         },
         formatter: (value) => `${value.toFixed(1)}%`,
       },

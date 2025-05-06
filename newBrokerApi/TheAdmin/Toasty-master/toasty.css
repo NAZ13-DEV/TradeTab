@@ -1,0 +1,97 @@
+#toastyBox {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  text-align: center;
+}
+
+.toasty {
+  display: flex;
+  align-items: center;
+  width: 360px;
+  text-align: left;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+  background-color: #ffffff; /* White background */
+  padding: 12px 15px;
+  border-radius: 0.5rem;
+  box-shadow: 0px 14px 23px -13px rgba(0, 0, 0, 0.244);
+  margin-bottom: 10px;
+  animation: toasty-in-top 0.3s ease-out both;
+  color:#000;
+}
+
+.toasty-icon {
+  margin-right: 10px;
+}
+
+.icon {
+  font-size: 20px;
+}
+
+.toasty-message {
+  flex: 1;
+}
+
+/* Color variations for icons */
+.toasty-icon-warning {
+  color: #ffc107; /* Yellow */
+}
+
+.toasty-icon-info {
+  color: #17a2b8; /* Blue */
+}
+
+.toasty-icon-success {
+  color: #28a745; /* Green */
+}
+
+.toasty-icon-danger {
+  color: #dc3545; /* Red */
+}
+
+.toasty-icon-primary {
+  color: #007bff; /* Primary */
+}
+
+.toasty-icon-secondary {
+  color: #6c757d; /* Secondary */
+}
+
+.toasty-out-top {
+  animation: toasty-out-top 0.5s ease-in-out both;
+}
+
+@keyframes toasty-in-top {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toasty-out-top {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}

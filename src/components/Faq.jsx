@@ -2,34 +2,34 @@ import  { useState } from "react";
 
 const faqs = [
   {
-    question: "Do I need to install any software to use TradeTab?",
+    question: "Do I need to install any software to use Crown Exchange?",
     answer:
-      "TradeTab is a fully web-based platform, accessible from any device with an internet connection. There is no need to install any software on your computer or mobile device.",
+      "Crown Exchange is a fully web-based platform, accessible from any device with an internet connection. There is no need to install any software on your computer or mobile device.",
   },
   {
-    question: "How secure is my data on TradeTab?",
+    question: "How secure is my data on Crown Exchange?",
     answer:
-      "TradeTab uses industry-standard encryption and security protocols to ensure that your data is protected. We prioritize your privacy and data security at all times.",
+      "Crown Exchange uses industry-standard encryption and security protocols to ensure that your data is protected. We prioritize your privacy and data security at all times.",
   },
   {
-    question: "How can I track my trading performance on TradeTab?",
+    question: "How can I track my trading performance on Crown Exchange?",
     answer:
-      "TradeTab provides comprehensive analytics and performance tracking tools. You can view detailed reports on your trades, profits, losses, and various trading metrics to help you make informed decisions.",
+      "Crown Exchange provides comprehensive analytics and performance tracking tools. You can view detailed reports on your trades, profits, losses, and various trading metrics to help you make informed decisions.",
   },
   {
-    question: "Is TradeTab beginner-friendly?",
+    question: "Is Crown Exchange beginner-friendly?",
     answer:
-      "Definitely! TradeTab is tailored to be easy to use for traders of all skill levels. We recommend that beginners start their trading journey on the platform for optimal success.",
+      "Definitely! Crown Exchange is tailored to be easy to use for traders of all skill levels. We recommend that beginners start their trading journey on the platform for optimal success.",
   },
   {
-    question: "Can I connect multiple broker accounts to TradeTab?",
+    question: "Can I connect multiple broker accounts to Crown Exchange?",
     answer:
-      "Yes. TradeTab allows you to connect and manage multiple broker accounts from a single platform. This makes it easy to monitor and analyze your trades across different brokers.",
+      "Yes. Crown Exchange allows you to connect and manage multiple broker accounts from a single platform. This makes it easy to monitor and analyze your trades across different brokers.",
   },
   {
-    question: "Does TradeTab offer real-time market data?",
+    question: "Does Crown Exchange offer real-time market data?",
     answer:
-      "Yes. TradeTab provides real-time market data and updates, ensuring that you have the latest information to make informed trading decisions.",
+      "Yes. Crown Exchange provides real-time market data and updates, ensuring that you have the latest information to make informed trading decisions.",
   },
 ];
 

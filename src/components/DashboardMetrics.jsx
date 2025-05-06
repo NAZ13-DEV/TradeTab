@@ -1,5 +1,5 @@
 import AccountStats from "./AccountStats"
-import DashboardFilters from "./DashboardFilters"
+// import DashboardFilters from "./DashboardFilters"
 import FooterTwo from "./FooterTwo"
 import Performance from "./Performance"
 import ProfitLosses from "./ProfitLosses"
@@ -8,7 +8,7 @@ import TradingDashboard from "./TradingDashboard"
 function DashboardMetrics() {
   return (
     <div  className="bg-[#050A1D]">
-      <DashboardFilters/>
+      {/* <DashboardFilters/> */}
       <AccountStats/>
       <TradingDashboard/>
       <Performance/>

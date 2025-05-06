@@ -29,7 +29,7 @@ const HeroParallax = () => {
               Maximize your <span className="text-white">Potential</span>
             </p>
             <p className="text-base leading-relaxed text-white sm:text-lg slide-in-left">
-              Elevate your trading journey and enhance your trading skills with TradeTab. Your all-in-one trading journal is designed to provide deep insights into every aspect of your trading strategy. Track every trade you make, analyze performance data, and discover new opportunities for improvement.
+              Elevate your trading journey and enhance your trading skills with Crown Exchange . Your all-in-one trading journal is designed to provide deep insights into every aspect of your trading strategy. Track every trade you make, analyze performance data, and discover new opportunities for improvement.
             </p>
           </div>
         </div>

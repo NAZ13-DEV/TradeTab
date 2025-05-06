@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Logo from "../img/logo_1.png";
+import { Bar } from "react-chartjs-2";
+// import Logo from "../img/logo_1.png";
 
 // Local images
 import balance from "../img/balance.png";
@@ -16,45 +17,13 @@ const tabImages = {
   Profit: profit,
 };
 
-// const calendarData = [
-//   { day: 1, percentage: "-0.04%", trades: 2, isLogoDay: false },
-//   { day: 2, percentage: "0.00%", trades: 5, isLogoDay: false },
-//   { day: 3, percentage: "0.01%", trades: 2, isLogoDay: false },
-//   { day: 4, percentage: "-0.02%", trades: 2, isLogoDay: false },
-//   { day: 5, percentage: "0.05%", trades: 5, isLogoDay: false },
-//   { day: 6, percentage: true, trades: true, isLogoDay: true },
-//   { day: 7, percentage: true, trades: true, isLogoDay: true },
-//   { day: 8, percentage: "0.01%", trades: 3, isLogoDay: false },
-//   { day: 9, percentage: "0.06%", trades: 1, isLogoDay: false },
-//   { day: 10, percentage: "-0.04%", trades: 1, isLogoDay: false },
-//   { day: 11, percentage: "0.03%", trades: 2, isLogoDay: false },
-//   { day: 12, percentage: "-0.02%", trades: 2, isLogoDay: false },
-//   { day: 13, percentage: true, trades: true, isLogoDay: true },
-//   { day: 14, percentage: true, trades: true, isLogoDay: true },
-//   { day: 15, percentage: "-0.05%", trades: 4, isLogoDay: false },
-//   { day: 16, percentage: "0.00%", trades: 1, isLogoDay: false },
-//   { day: 17, percentage: "-0.02%", trades: 1, isLogoDay: false },
-//   { day: 18, percentage: "-0.05%", trades: 4, isLogoDay: false },
-//   { day: 19, percentage: "0.05%", trades: 4, isLogoDay: false },
-//   { day: 20, percentage: null, trades: null, isLogoDay: true },
-//   { day: 21, percentage: null, trades: null, isLogoDay: true },
-//   { day: 22, percentage: "0.06%", trades: 3, isLogoDay: false },
-//   { day: 23, percentage: "0.02%", trades: 3, isLogoDay: false },
-//   { day: 24, percentage: "0.01%", trades: 3, isLogoDay: false },
-//   { day: 25, percentage: "0.04%", trades: 3, isLogoDay: false },
-//   { day: 26, percentage: "-0.04%", trades: 3, isLogoDay: false },
-//   { day: 27, percentage: null, trades: null, isLogoDay: true },
-//   { day: 28, percentage: null, trades: null, isLogoDay: true },
-//   { day: 29, percentage: "0.04%", trades: 2, isLogoDay: false },
-//   { day: 30, percentage: "-0.01%", trades: 4, isLogoDay: false },
-//   { day: 31, percentage: "0.04%", trades: 3, isLogoDay: false },
-// ];
-
-// const tabs = ["balance","drawdown","gains","profit"];
-
 const Chart = () => {
   const [activeTab, setActiveTab] = useState("Balance");
   const [imageKey, setImageKey] = useState(0); // Force re-render on tab change
+  const [isTraded, setIsTraded] = useState(true);
+  const handleToggle = () => {
+    setIsTraded((prev) => !prev);
+  };
 
   useEffect(() => {
     AOS.init({ duration: 800 });
@@ -64,6 +33,208 @@ const Chart = () => {
     setImageKey((prev) => prev + 1); // change key to re-trigger animation
     AOS.refreshHard(); // Refresh AOS to allow re-animation
   }, [activeTab]);
+
+  const datas = {
+    labels: [
+      "NZDJPY+",
+      "NZDCAD+",
+      "CADJPY+",
+      "XAUUSD+",
+      "GBPAUD+",
+      "AUDNZD+",
+      "USDCHF+",
+      "NZDUSD+",
+      "EURAUD+",
+      "EURNZD+",
+      "GBPNZD+",
+      "GBPCAD+",
+      "GBPCHF+",
+      "USDCAD+",
+      "AUDUSD+",
+      "AUDCAD+",
+      "AUDCHF+",
+      "NZDCHF+",
+      "GBPUSD+",
+      "EURCHF+",
+      "USDJPY+",
+      "EURJPY+",
+      "EURUSD+",
+      "EURCAD+",
+      "AUDJPY+",
+      "EURGBP+",
+      "GBPJPY+",
+      "CADCHF+",
+      "CHFJPY+",
+    ],
+    datasets: [
+      {
+        label: "Trades",
+        data: [
+          70, 60, 45, 480, 90, 15, 110, 30, 5, 400, 150, 100, 450, 115, 130, 85,
+          190, 20, 300, 470, 220, 1853, 180, 380, 160, 25, 1900, 310, 140,
+        ],
+        backgroundColor: "#107350",
+        borderRadius: 4,
+        barThickness: 14,
+        borderSkipped: false,
+      },
+    ],
+  };
+
+  const optionss = {
+    indexAxis: "y",
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.parsed.x} trades`,
+        },
+      },
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        max: 2000,
+        ticks: {
+          color: "#00f0ff",
+        },
+        grid: {
+          color: "",
+        },
+      },
+      y: {
+        ticks: {
+          color: "#ffffff",
+          autoSkip: false,
+        },
+        grid: {
+          display: false,
+        },
+        categoryPercentage: 0.8,
+        barPercentage: 0.6,
+      },
+    },
+  };
+
+  const data2 = {
+    labels: [
+      "GBPUSD+",
+      "NZDCHF+",
+      "EURCHF+",
+      "USDJPY+",
+      "EURJPY+",
+      "EURUSD+",
+      "NZDJPY+",
+      "NZDCAD+",
+      "CADJPY+",
+      "XAUUSD+",
+      "GBPAUD+",
+      "AUDNZD+",
+      "USDCHF+",
+      "NZDUSD+",
+      "EURAUD+",
+      "EURNZD+",
+      "GBPNZD+",
+      "GBPCAD+",
+      "GBPCHF+",
+      "USDCAD+",
+      "AUDUSD+",
+      "AUDCAD+",
+      "AUDCHF+",
+      "EURCAD+",
+      "AUDJPY+",
+      "EURGBP+",
+      "GBPJPY+",
+      "CADCHF+",
+      "CHFJPY+",
+    ],
+    datasets: [
+      {
+        label: "Volume",
+        data: [
+          64,
+          70,
+          55,
+          67,
+          69,
+          60,
+          51,
+          72,
+          66,
+          68,
+          62,
+          59,
+          61,
+          71,
+          65,
+          50,
+          53,
+          58,
+          54,
+          56,
+          63,
+          70,
+          69,
+          57,
+          67,
+          49, 
+          50,// ← Only two under 50: 50 & 49
+          60,
+          66,
+        ],
+        backgroundColor: "#D6A41B",
+        borderRadius: 4,
+        barThickness: 14,
+        borderSkipped: false,
+      },
+    ],
+  };
+  const options2 = {
+    indexAxis: "y",
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.parsed.x}%`,
+        },
+      },
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        max: 80,
+        ticks: {
+          color: "#D6A41B",
+        },
+        font: {
+          size: 14, // ✅ Y-axis label font size (e.g. "GBPUSD+")
+          weight: "bold", // Optional
+        },
+        grid: {
+          color: "",
+        },
+      },
+      y: {
+        ticks: {
+          color: "#ffffff",
+          autoSkip: false,
+        },
+        font: {
+          size: 14, // ✅ Y-axis label font size (e.g. "GBPUSD+")
+          weight: "bold", // Optional
+        },
+        grid: {
+          display: false,
+        },
+        categoryPercentage: 0.4,
+        barPercentage: 0.9,
+      },
+    },
+  };
 
   return (
     <div className="grid grid-cols-12 gap-4 px-4 md:px-0">
@@ -127,644 +298,58 @@ const Chart = () => {
         </div>
       </div>
 
-      {activeTab === "Balance" && (
-        <div className="col-span-12 md:col-span-4">
-          <div className="flex flex-col justify-between h-full transition duration-300 border md:py-4 md:px-2 rounded-2xl bg-gradient-to-t from-cyan-700 via-transparent to-transparent border-cyan-800 hover:border-cyan-500">
-            <div className="flex flex-col">
-              <div className="grid grid-cols-7 mb-2 text-center">
-                <span className="text-[0.8rem] text-white">Mon</span>
-                <span className="text-[0.8rem] text-white">Tue</span>
-                <span className="text-[0.8rem] text-white">Wed</span>
-                <span className="text-[0.8rem] text-white">Thu</span>
-                <span className="text-[0.8rem] text-white">Fri</span>
-                <span className="text-[0.8rem] text-red-500">Sat</span>
-                <span className="text-[0.8rem] text-red-500">Sun</span>
-              </div>
-              <div className="grid grid-cols-7 gap-1 rounded-lg">
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    1
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.03 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">2</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    2
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.01 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">4</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    3
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.06 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">5</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    4
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.04 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">4</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    5
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.05 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">5</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border rounded-lg bg-slate-900 border-darkblack-700 ">
-                  <p className='absolute top-0 left-0 px-1" text-white font-bold  text-[0.7rem]'>
-                    6
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <div className="w-full">
-                      <img className="w-6 opacity-90" src={Logo} alt="logo" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="relative flex items-center justify-center w-full h-24 border rounded-lg bg-slate-900 border-darkblack-700 ">
-                  <p className='absolute top-0 left-0 px-1" text-white font-bold  text-[0.7rem]'>
-                    7
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <div className="w-full">
-                      <img className="w-6 opacity-90" src={Logo} alt="logo" />
-                    </div>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    8
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.02 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">2</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    9
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.05 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">3</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-red-400 rounded-lg bg-gradient-to-r from-red-300 to-red-400 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    10
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      -0.05 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">1</strong>trade
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    11
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.01 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">5</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    12
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.04 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">3</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border rounded-lg bg-slate-900 border-darkblack-700 ">
-                  <p className='absolute top-0 left-0 px-1" text-white font-bold  text-[0.7rem]'>
-                    13
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <div className="w-full">
-                      <img className="w-6 opacity-90" src={Logo} alt="logo" />
-                    </div>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border rounded-lg bg-slate-900 border-darkblack-700 ">
-                  <p className='absolute top-0 left-0 px-1" text-white font-bold  text-[0.7rem]'>
-                    14
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <div className="w-full">
-                      <img className="w-6 opacity-90" src={Logo} alt="logo" />
-                    </div>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-red-400 rounded-lg bg-gradient-to-r from-red-300 to-red-400 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    15
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      -0.02 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">3</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-red-400 rounded-lg bg-gradient-to-r from-red-300 to-red-400 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    16
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      -0.03 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">5</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    17
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.01 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">4</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-red-400 rounded-lg bg-gradient-to-r from-red-300 to-red-400 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    18
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      -0.03 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">3</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    19
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.03 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">3</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border rounded-lg bg-slate-900 border-darkblack-700 ">
-                  <p className='absolute top-0 left-0 px-1" text-white font-bold  text-[0.7rem]'>
-                    20
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <div className="w-full">
-                      <img className="w-6 opacity-90" src={Logo} alt="logo" />
-                    </div>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border rounded-lg bg-slate-900 border-darkblack-700 ">
-                  <p className='absolute top-0 left-0 px-1" text-white font-bold  text-[0.7rem]'>
-                    21
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <div className="w-full">
-                      <img className="w-6 opacity-90" src={Logo} alt="logo" />
-                    </div>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-red-400 rounded-lg bg-gradient-to-r from-red-300 to-red-400 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    22
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      -0.00 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">1</strong>trade
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    23
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.05 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">4</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    24
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.04 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">5</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-green-400 rounded-lg bg-gradient-to-r from-green-400 to-green-500 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    25
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      0.05 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">4</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-red-400 rounded-lg bg-gradient-to-r from-red-300 to-red-400 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    26
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      -0.05 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">1</strong>trade
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border rounded-lg bg-slate-900 border-darkblack-700 ">
-                  <p className='absolute top-0 left-0 px-1" text-white font-bold  text-[0.7rem]'>
-                    27
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <div className="w-full">
-                      <img className="w-6 opacity-90" src={Logo} alt="logo" />
-                    </div>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border rounded-lg bg-slate-900 border-darkblack-700 ">
-                  <p className='absolute top-0 left-0 px-1" text-white font-bold  text-[0.7rem]'>
-                    28
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <div className="w-full">
-                      <img className="w-6 opacity-90" src={Logo} alt="logo" />
-                    </div>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-red-400 rounded-lg bg-gradient-to-r from-red-300 to-red-400 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    29
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      -0.04 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">2</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-red-400 rounded-lg bg-gradient-to-r from-red-300 to-red-400 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    30
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      -0.00 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">3</strong>trades
-                    </p>
-                  </div>
-                </div>
-                <div className="relative flex items-center justify-center w-full h-24 border-2 border-red-400 rounded-lg bg-gradient-to-r from-red-300 to-red-400 ">
-                  <p className='absolute top-0 left-0 px-1" text-black font-bold  text-[0.7rem]'>
-                    31
-                  </p>
-                  <div className="items-end text-sm text-black md:whitespace-nowrap ">
-                    <p className="text-sm font-bold text-center text-black">
-                      -0.05 %
-                    </p>
-                    <p className="text-[0.6rem] md:text-[0.75rem] text-center whitespace-nowrap text-black">
-                      <strong className="pr-1">1</strong>trade
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {activeTab === "Drawdown" && (
-        <div className="col-span-12 md:col-span-4">
-          <div className="flex flex-col justify-between h-full transition duration-300 border md:py-4 md:px-2 rounded-2xl bg-gradient-to-t from-cyan-700 via-transparent to-transparent border-cyan-800 hover:border-cyan-500">
-            <div className="flex flex-col">
-              <div className="grid grid-cols-7 mb-2 text-center">
-                {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
-                  (day, idx) => (
-                    <span
-                      key={day}
-                      className={`text-[0.8rem] ${
-                        idx > 4 ? "text-red-500" : "text-white"
-                      }`}
-                    >
-                      {day}
-                    </span>
-                  )
-                )}
-              </div>
-
-              <div className="grid grid-cols-7 gap-1 rounded-lg">
-                {[
-                  { day: 1, percent: "0.03", trades: 2, status: "green" },
-                  { day: 2, percent: "0.05", trades: 5, status: "green" },
-                  { day: 3, percent: "-0.05", trades: 2, status: "red" },
-                  { day: 4, percent: "0.05", trades: 2, status: "green" },
-                  { day: 5, percent: "0.00", trades: 5, status: "green" },
-                  { day: 6, logo: true },
-                  { day: 7, logo: true },
-                  { day: 8, percent: "0.05", trades: 3, status: "green" },
-                  { day: 9, percent: "0.04", trades: 1, status: "green" },
-                  { day: 10, percent: "0.02", trades: 1, status: "green" },
-                  { day: 11, percent: "0.02", trades: 2, status: "green" },
-                  { day: 12, percent: "0.05", trades: 2, status: "green" },
-                  { day: 13, logo: true },
-                  { day: 14, logo: true },
-                  { day: 15, percent: "0.03", trades: 4, status: "green" },
-                  { day: 16, percent: "-0.01", trades: 1, status: "red" },
-                  { day: 17, percent: "0.01", trades: 1, status: "green" },
-                  { day: 18, percent: "0.02", trades: 4, status: "green" },
-                  { day: 19, percent: "0.04", trades: 4, status: "green" },
-                  { day: 20, logo: true },
-                  { day: 21, logo: true },
-                  { day: 22, percent: "0.03", trades: 3, status: "green" },
-                  { day: 23, percent: "0.05", trades: 3, status: "green" },
-                  { day: 24, percent: "0.02", trades: 3, status: "green" },
-                  { day: 25, percent: "0.02", trades: 3, status: "green" },
-                  { day: 26, percent: "0.05", trades: 3, status: "green" },
-                  { day: 27, logo: true },
-                  { day: 28, logo: true },
-                  { day: 29, percent: "0.00", trades: 2, status: "green" },
-                  { day: 30, percent: "0.03", trades: 4, status: "green" },
-                  { day: 31, percent: "-0.05", trades: 3, status: "red" },
-                ].map(({ day, percent, trades, logo, status }) => {
-                  const bgColor = logo
-                    ? "bg-slate-900 border border-darkblack-700"
-                    : `bg-gradient-to-r from-${
-                        status === "red" ? "red-300" : "green-400"
-                      } to-${
-                        status === "red" ? "red-400" : "green-500"
-                      } border-2 border-${
-                        status === "red" ? "red-400" : "green-400"
-                      }`;
-
-                  return (
-                    <div
-                      key={day}
-                      className={`relative w-full h-24 flex items-center justify-center rounded-lg ${bgColor}`}
-                    >
-                      <p  className={`absolute top-0 left-0 px-1 text-[0.7rem] font-bold ${
-                          logo ? "text-white" : "text-black"
-                        }`}>
-                        {day}
-                      </p>
-                      <div className="items-end text-sm">
-                        {logo ? (
-                          <div className="flex justify-center w-full">
-                            <img
-                              className="w-6 opacity-90"
-                              src={Logo}
-                              alt="logo"
-                            />
-                          </div>
-                        ) : (
-                          <>
-                            <p className="text-sm font-bold text-center text-black">
-                              {percent} %
-                            </p>
-                            <p className="text-[0.6rem] md:text-[0.75rem] text-center text-black whitespace-nowrap">
-                              <strong className="pr-1">{trades}</strong>
-                              {trades > 1 ? "trades" : "trade"}
-                            </p>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {activeTab === "Gains" && (
-        <div className="col-span-12 md:col-span-4">
-          <div className="flex flex-col justify-between h-full transition duration-300 border md:py-4 md:px-2 rounded-2xl bg-gradient-to-t from-cyan-700 via-transparent to-transparent border-cyan-800 hover:border-cyan-500">
-            <div className="flex flex-col">
-              {/* Weekdays Header */}
-              <div className="grid grid-cols-7 mb-2 text-center">
-                {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
-                  (day, index) => (
-                    <span
-                      key={day}
-                      className={`text-[0.8rem] ${
-                        index >= 5 ? "text-red-500" : "text-white"
-                      }`}
-                    >
-                      {day}
-                    </span>
-                  )
-                )}
-              </div>
-
-              {/* Calendar Days */}
-              <div className="grid grid-cols-7 gap-1 rounded-lg">
-                {Array.from({ length: 31 }).map((_, i) => {
-                  const day = i + 1;
-                  const isNoData = [6, 7, 13, 14, 20, 21, 27, 28].includes(day);
-                  const isLoss = [2, 4, 12, 24, 29].includes(day);
-                  const hasLogo = isNoData;
-
-                  const bgColor = hasLogo
-                    ? "bg-slate-900 border border-darkblack-700"
-                    : isLoss
-                    ? "bg-gradient-to-r from-red-300 to-red-400 border-2 border-red-400"
-                    : "bg-gradient-to-r from-green-400 to-green-500 border-2 border-green-400";
-
-                  return (
-                    <div
-                      key={day}
-                      className={`relative w-full h-24 flex items-center justify-center rounded-lg ${bgColor}`}
-                    >
-                      <p
-                        className={`absolute top-0 left-0 px-1 text-[0.7rem] font-bold ${
-                          hasLogo ? "text-white" : "text-black"
-                        }`}
-                      >
-                        {day}
-                      </p>
-
-                      <div className="items-end w-full text-sm text-center text-black md:whitespace-nowrap">
-                        {hasLogo ? (
-                          <img
-                            src={Logo}
-                            className="w-6 mx-auto opacity-90"
-                            alt="logo"
-                          />
-                        ) : (
-                          <>
-                            <p className="text-sm font-bold text-black">
-                              {isLoss ? "-0.03 %" : "0.05 %"}
-                            </p>
-                            <p className="text-[0.6rem] md:text-[0.75rem] whitespace-nowrap text-black">
-                              <strong className="pr-1">
-                                {Math.floor(Math.random() * 5 + 1)}
-                              </strong>
-                              trades
-                            </p>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-{activeTab === "Profit" && (
-  <div className="col-span-12 md:col-span-4">
-    <div className="flex flex-col justify-between h-full transition duration-300 border md:py-4 md:px-2 rounded-2xl bg-gradient-to-t from-cyan-700 via-transparent to-transparent border-cyan-800 hover:border-cyan-500">
-      <div className="flex flex-col">
-        <div className="grid grid-cols-7 mb-2 text-center">
-          {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day, i) => (
-            <span key={day} className={`text-[0.8rem] ${i >= 5 ? "text-red-500" : "text-white"}`}>
-              {day}
-            </span>
-          ))}
-        </div>
-        <div className="grid grid-cols-7 gap-1 rounded-lg">
-          {Array.from({ length: 31 }).map((_, i) => {
-            const day = i + 1;
-            const isLogoDay = [6, 7, 13, 14, 20, 21, 27, 28].includes(day);
-            const isRedDay = [10, 16, 22, 29].includes(day);
-            const percentage = isLogoDay ? null : isRedDay ? "-0.04 %" : "0.05 %";
-            const trades = isLogoDay ? null : day % 4 === 0 ? 4 : 2;
-            const bgColor = isLogoDay
-              ? "bg-slate-900 border border-darkblack-700"
-              : isRedDay
-              ? "bg-gradient-to-r from-red-300 to-red-400 border-2 border-red-400"
-              : "bg-gradient-to-r from-green-400 to-green-500 border-2 border-green-400";
-
-            return (
-              <div
-                key={day}
-                className={`relative w-full h-24 flex items-center justify-center rounded-lg ${bgColor}`}
+      <div className="w-full col-span-12 md:col-span-4 px-4 py-4 duration-300 ease-in-out border bg-gradient-to-t from-cyan-700 via-transparent to-transparent border-cyan-800 hover:border-cyan-500 rounded-2xl">
+        <div className="flex items-center justify-between w-full text-white border-b border-b-darkblack-500">
+          <h2 className="pt-2 pb-2 my-1 text-xl font-semibold text-white font-poppins">
+            {isTraded ? "Most Traded Assets" : "Success Rate By Trading Pair"}
+          </h2>
+          <div className="flex items-center justify-between h-10 px-4 space-x-2 shadow-xl cursor-pointer rounded-xl hover:bg-slate-800">
+            <button
+              onClick={handleToggle}
+              className="flex items-center justify-between"
+            >
+              <span className="capitalize">
+                {isTraded ? "Most Trade" : "Most Succesful"}
+              </span>
+              <svg
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  isTraded ? "rotate-0" : "rotate-180"
+                }`}
+                fill="currentColor"
+                viewBox="0 0 24 24"
               >
-                <p
-                  className={`absolute top-0 left-0 px-1 font-bold text-[0.7rem] ${
-                    isLogoDay ? "text-white" : "text-black"
-                  }`}
-                >
-                  {day}
-                </p>
-                <div className="flex items-end justify-center w-full text-sm text-black md:whitespace-nowrap">
-                  {isLogoDay ? (
-                    <img className="w-6 opacity-90" src={Logo} alt="logo" />
-                  ) : (
-                    <div className="text-center">
-                      <p className="text-sm font-bold text-black">{percentage}</p>
-                      <p className="text-[0.6rem] md:text-[0.75rem] whitespace-nowrap text-black">
-                        <strong className="pr-1">{trades}</strong>
-                        {trades > 1 ? "trades" : "trade"}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+                <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* 🔽 Scrollable Chart Container with custom scrollbar */}
+        <div
+          className="h-64 pr-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-cyan-500 custom-scrollbar"
+          style={{ height: "450px" }}
+        >
+          <div>
+            {isTraded ? (
+              <Bar
+                data={datas}
+                options={optionss}
+                height={650}
+                width={650}
+                className="text-sm leading-6 font-outfit"
+              />
+            ) : (
+              <Bar
+                data={data2}
+                options={options2}
+                height={650}
+                width={650}
+                className="p-10 text-sm leading-6 font-outfit"
+              />
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-)}
-
     </div>
   );
 };

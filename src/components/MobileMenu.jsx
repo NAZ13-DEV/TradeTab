@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import { X } from "lucide-react";
 import { Link } from "react-router-dom";
-import Logo from "../img/logo_1.png";
+// import Logo from "../img/logo_1.png";
+import BigLogo from "../img/BigLogoIcon.png";
+
 
 const MobileMenu = ({ onClose }) => {
   return (
@@ -9,8 +11,8 @@ const MobileMenu = ({ onClose }) => {
       {/* Top bar */}
       <div className="flex items-center justify-between mb-6">
         <Link to={"/home"} className="flex items-center space-x-2 text-lg font-bold">
-          <img src={Logo} alt="TradeTab logo" className="w-8 h-8" />
-          <span className="text-green-400 ">Trade</span>Tab
+          <img src={BigLogo} alt="Crown Exchange logo" className="w-24" />
+          {/* <span className="text-green-400 ">Trade</span>Tab */}
         </Link>
         <button onClick={onClose} aria-label="Close menu">
           <X className="w-6 h-6" />

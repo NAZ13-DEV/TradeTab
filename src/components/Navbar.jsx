@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import MobileMenu from "./MobileMenu";
-import Logo from "../img/logo_1.png";
+// import Logo from "../img/logo_1.png";
+import BigLogo from "../img/BigLogoIcon.png";
 import useBreakpoint from "../components/UseBreakpoint";
 
 const Navbar = () => {
@@ -25,8 +26,8 @@ const Navbar = () => {
        <div className="flex items-start justify-between w-full md:flex-row md:items-start">
          {/* Left: Logo */}
          <Link to={"/home"} className="flex items-center space-x-2 text-xl font-bold">
-           <img src={Logo} alt="TradeTab" className="w-8 h-8" />
-           <span className="text-transparent bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text">Trade</span>Tab
+           <img src={BigLogo} alt="TradeTab" className="w-32" />
+           {/* <span className="text-transparent bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text">Trade</span>Tab */}
          </Link>
      
          {/* Right: Telegram at top right */}
@@ -130,8 +131,8 @@ const Navbar = () => {
         <nav className="fixed top-0 left-0 z-50 flex items-center justify-between w-full px-4 py-4 text-white backdrop-blur-lg">
         {/* Logo */}
         <Link to={"/home"} className="flex items-center space-x-2 text-xl font-bold">
-          <img src={Logo} alt="TradeTab" className="w-8 h-8" />
-          <span className="text-transparent bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text">Trade</span>Tab
+          <img src={BigLogo} alt="TradeTab" className="w-32" />
+          {/* <span className="text-transparent bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text">Trade</span>Tab */}
         </Link>
 
         {/* Desktop Nav */}

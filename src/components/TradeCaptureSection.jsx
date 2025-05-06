@@ -19,7 +19,7 @@ const TradeCaptureSection = () => {
               Capture <span className="text-teal-500">Every Trade in Detail</span>
             </p>
             <p className="text-base leading-relaxed text-white sm:text-lg autoShow">
-              Never miss a beat with TradeTab's detailed trade logging. From entry and exit points to notes on market conditions; track every element of your trades with precision. Our comprehensive journaling feature helps you record, reflect, and improve with every single trade.
+              {`Never miss a beat with Crown Exchange's detailed trade logging. From entry and exit points to notes on market conditions; track every element of your trades with precision. Our comprehensive journaling feature helps you record, reflect, and improve with every single trade.`}
             </p>
           </div>
         </div>

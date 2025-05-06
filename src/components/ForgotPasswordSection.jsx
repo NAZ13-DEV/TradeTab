@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import { Mail } from "lucide-react";
-import { toast } from "react-hot-toast";
-import logoLight from "../img/logo_light.png";
+import { toast, Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import BigLogo from "../img/BigLogoIcon.png";
+import api from "../redux/slices/api"; // Adjust path as needed
 
 const ForgotPasswordSection = () => {
   const {
@@ -11,33 +13,44 @@ const ForgotPasswordSection = () => {
     reset,
   } = useForm();
 
-  const onSubmit = async (data) => {
-    const loadingToast = toast.loading("Sending reset instructions...");
+  const navigate = useNavigate();
+
+  const onSubmit = async ({ email }) => {
+    if (!email) {
+      toast.error("Email is required.");
+      return;
+    }
+
+    const isValidEmail = /\S+@\S+\.\S+/.test(email);
+    if (!isValidEmail) {
+      toast.error("Please enter a valid email.");
+      return;
+    }
+
+    const userData = { email };
 
     try {
-      const response = await fetch("https://your-api-link.com/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: data.email }),
-      });
-
-      const result = await response.json();
-      toast.dismiss(loadingToast);
-
-      if (!response.ok) {
-        toast.error(result.message || "Something went wrong.");
-      } else {
-        toast.success("Password reset instructions sent!");
+      const response = await api.post("ProcessReset", userData);
+      if (response.status === 201) {
+        toast.success("Reset Link Has Been Sent Successfully");
         reset();
+        setTimeout(() => {
+          navigate("/forgotten_sucess");
+        }, 3000);
       }
-    } catch {
-      toast.dismiss(loadingToast);
-      toast.error("Network error. Please try again.");
+    } catch (error) {
+      if (error.response?.status === 422) {
+        const regErrors = error.response.data.errors[0];
+        toast.error(regErrors);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     }
   };
 
   return (
     <div className="w-full px-4 py-32 md:py-52 md:px-16 lg:py-36">
+      <Toaster position="top-center" />
       <div className="flex flex-col items-center justify-center gap-10 mx-auto md:flex-row md:gap-12 lg:gap-20 max-w-7xl">
         {/* Left Section */}
         <div className="w-full text-center md:w-1/2 md:text-left">
@@ -53,7 +66,7 @@ const ForgotPasswordSection = () => {
         <div className="w-full px-6 py-8 shadow-lg md:w-1/2 rounded-2xl bg-slate-900/80">
           <div className="flex justify-center mb-6">
             <a href="/">
-              <img src={logoLight} alt="Logo" className="w-44 sm:w-52" />
+              <img src={BigLogo} alt="Logo" className="w-32 sm:w-52" />
             </a>
           </div>
 
@@ -68,10 +81,6 @@ const ForgotPasswordSection = () => {
                 type="email"
                 {...register("email", {
                   required: "Email is required",
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: "Invalid email format",
-                  },
                 })}
                 placeholder="Enter your email"
                 className="w-full py-2 pl-10 pr-4 bg-transparent border border-teal-500 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 text-slate-400"
