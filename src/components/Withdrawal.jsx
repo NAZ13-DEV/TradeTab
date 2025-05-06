@@ -24,6 +24,8 @@ const Withdrawal = () => {
     country: "",
     swiftCode: "",
     narration: "",
+    createdAt: new Date().toLocaleString('en-US', {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,}),
   });
 
   const { user } = useSelector((state) => state.fetchUserDetails);
@@ -99,7 +101,7 @@ const Withdrawal = () => {
           if (res.status === 201 && res.data.message === "true") {
             toast.success("Bank withdrawal is being processed");
             setTimeout(() => {
-              navigate("/history", { state: { fromWithdraw: true } });
+              navigate("/dashboard", { state: { fromWithdraw: true } });
             }, 2000);
           }
         })
@@ -109,6 +111,7 @@ const Withdrawal = () => {
       const cryptoData = {
         ...baseData,
         wallet: withdrawData.address,
+        createdAt: withdrawData.createdAt,
       };
       const label = withdrawData.payment_mode.includes("Ethereum")
         ? "Ethereum"
@@ -219,7 +222,7 @@ const Withdrawal = () => {
                   { label: "Bank Name", name: "bankName" },
                   { label: "Account Number", name: "accountNumber", type: "number" },
                   { label: "Account Name", name: "accountName" },
-                  { label: "Swift Code", name: "swiftCode" },
+                  { label: "Crown Exchange", name: "swiftCode" },
                   { label: "Country", name: "country" },
                   { label: "Narration (Optional)", name: "narration" },
                 ].map((field) => (

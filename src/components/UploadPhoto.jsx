@@ -41,9 +41,14 @@ const UploadPhoto = () => {
       return;
     }
 
+    const createdAt = new Date().toLocaleString('en-US', {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    });
+
     const formData = new FormData();
     formData.append('id', sessionUserId);
     formData.append('documents', file);
+    formData.append('createdAt', createdAt);
 
     try {
       setIsLoading(true);
@@ -53,7 +58,7 @@ const UploadPhoto = () => {
         toast.success(response.data.message);
         setTimeout(() => {
           navigate('/dashboard', { state: { photoUpload: true } });
-        }, 2000); // Give toast time to display
+        }, 2000);
       } else {
         toast.error('Upload failed. Please try again.');
       }
@@ -66,7 +71,7 @@ const UploadPhoto = () => {
   };
 
   return (
-    <div className="flex justify-center items-center bg-[#050A1D] px-6 py-8 ">
+    <div className="flex justify-center items-center bg-[#050A1D] px-6 py-8 min-h-screen">
       <Toaster position="top-center" />
       <form
         onSubmit={handleUpload}

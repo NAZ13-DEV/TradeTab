@@ -52,11 +52,13 @@ const QuickSignupSection = () => {
       password: "",
       confirmPassword: "",
       referral: "",
+      dateOc:new Date().toLocaleString('en-US', {
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,}),
     },
     validationSchema,
     onSubmit: async (values) => {
       dispatch(registerUser(values));
-    },
+    }
   });
 
   const handleCountrySelect = (country) => {

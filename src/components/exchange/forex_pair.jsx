@@ -51,54 +51,45 @@ const ForexPair = ({
     dispatch(fetchUserDetails(storedUserId));
   }, [dispatch]);
 
+  const transformKeys = (fields) => {
+ return {
+  amount: fields.amount,
+  Symbol: fields.symbol,
+  Intervah: fields.interval,
+  Leverage: fields.leverage,
+  stploss: fields.stopLoss,
+  takeprofit: fields.takeProfit,
+  EntryPrice: fields.entryPrice,
+  tradeType: fields.tradeType,
+  trading_pairs: fields.tradingPair,
+  userId: fields.userId,            // ✅ key fixed here
+  trade: fields.trade || null,
+};
+
+    
+    
+    
+    
+  };
+
   const handleBuySubmit = (e) => {
     e.preventDefault();
-    if (!formFields.amount || isNaN(formFields.amount)) {
-      toast.error('Amount is required and must be a number.');
-      return;
-    }
-    if (!formFields.stopLoss || isNaN(formFields.stopLoss)) {
-      toast.error('Stop Loss is required and must be a number.');
-      return;
-    }
-    if (!formFields.takeProfit || isNaN(formFields.takeProfit)) {
-      toast.error('Take Profit is required and must be a number.');
-      return;
-    }
-    if (!formFields.entryPrice || isNaN(formFields.entryPrice)) {
-      toast.error('Entry Price is required and must be a number.');
-      return;
-    }
-    if (parseFloat(formFields.amount) > parseFloat(user.balance)) {
-      toast.error('Unable to process the trade due to insufficient balance');
-      return;
-    }
-    dispatch(saveTradeData(formFields));
+    if (!formFields.amount || isNaN(formFields.amount)) return toast.error('Amount is required and must be a number.');
+    if (!formFields.stopLoss || isNaN(formFields.stopLoss)) return toast.error('Stop Loss must be a number.');
+    if (!formFields.takeProfit || isNaN(formFields.takeProfit)) return toast.error('Take Profit must be a number.');
+    if (!formFields.entryPrice || isNaN(formFields.entryPrice)) return toast.error('Entry Price must be a number.');
+    if (parseFloat(formFields.amount) > parseFloat(user.balance)) return toast.error('Insufficient balance.');
+    dispatch(saveTradeData(transformKeys(formFields)));
   };
 
   const handleSellSubmit = (e) => {
     e.preventDefault();
-    if (!sellForm.amount || isNaN(sellForm.amount)) {
-      toast.error('Amount is required and must be a number.');
-      return;
-    }
-    if (!sellForm.stopLoss || isNaN(sellForm.stopLoss)) {
-      toast.error('Stop Loss is required and must be a number.');
-      return;
-    }
-    if (!sellForm.takeProfit || isNaN(sellForm.takeProfit)) {
-      toast.error('Take Profit is required and must be a number.');
-      return;
-    }
-    if (!sellForm.entryPrice || isNaN(sellForm.entryPrice)) {
-      toast.error('Entry Price is required and must be a number.');
-      return;
-    }
-    if (parseFloat(sellForm.amount) > parseFloat(user.balance)) {
-      toast.error('Unable to process the trade due to insufficient balance');
-      return;
-    }
-    dispatch(saveTradeData(sellForm));
+    if (!sellForm.amount || isNaN(sellForm.amount)) return toast.error('Amount is required and must be a number.');
+    if (!sellForm.stopLoss || isNaN(sellForm.stopLoss)) return toast.error('Stop Loss must be a number.');
+    if (!sellForm.takeProfit || isNaN(sellForm.takeProfit)) return toast.error('Take Profit must be a number.');
+    if (!sellForm.entryPrice || isNaN(sellForm.entryPrice)) return toast.error('Entry Price must be a number.');
+    if (parseFloat(sellForm.amount) > parseFloat(user.balance)) return toast.error('Insufficient balance.');
+    dispatch(saveTradeData(transformKeys(sellForm)));
   };
 
   useEffect(() => {
@@ -144,11 +135,12 @@ const ForexPair = ({
 
   return (
     <>
-     <div className='mt-6 gap-6 grid grid-cols-12 forex-form-theme'>
-      {/* Line chart  */}
-      <div className='bg-Primary-bg rounded-xl p-4 lg:px-7 lg:py-6 col-span-12 xl:col-span-6'>
-        <form onSubmit={handleBuySubmit} ref={buyFormRef}>
-          <div className='flex gap-3 flex-wrap justify-between items-center mb-6 scrollable-container'>
+      <div className='mt-6 gap-6 grid grid-cols-12 forex-form-theme'>
+        {/* Quick Buy Form */}
+        <div className='bg-Primary-bg rounded-xl p-4 lg:px-7 lg:py-6 col-span-12 xl:col-span-6'>
+          <form onSubmit={handleBuySubmit} ref={buyFormRef}>
+            <Toaster position='top-center' />
+            <div className='flex gap-3 flex-wrap justify-between items-center mb-6 scrollable-container'>
             <div className='h-[700px] lg:h-[700px] w-full'>
               {/* Embed TradingView Widget */}
               <h5 className='text-base text-customGreen font-bold leading-[24px] mb-3 text-center'>
@@ -395,12 +387,13 @@ const ForexPair = ({
               </div>
             </div>
           </div>
-        </form>
-      </div>
 
-      <div className='bg-Primary-bg rounded-xl p-4 lg:px-7 lg:py-6 col-span-12 xl:col-span-6 '>
-        <form onSubmit={handleSellSubmit}  ref={sellFormRef}>
-          <Toaster position='top-center' />
+          </form>
+        </div>
+
+        {/* Quick Sell Form */}
+        <div className='bg-Primary-bg rounded-xl p-4 lg:px-7 lg:py-6 col-span-12 xl:col-span-6'>
+          <form onSubmit={handleSellSubmit} ref={sellFormRef}>
           <div className='flex gap-3 flex-wrap justify-between items-center mb-6 scrollable-container'>
             <div className='h-[700px] lg:h-[700px] w-full'>
               {/* Embed TradingView Widget */}
@@ -659,9 +652,9 @@ const ForexPair = ({
               </div>
             </div>
           </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
     </>
   );
 };

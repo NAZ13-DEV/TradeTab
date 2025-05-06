@@ -1,6 +1,6 @@
 
 import BrokersSection from '../components/BrokerSection';
-import Chart from '../components/Chart';
+// import Chart from '../components/Chart';
 import ContactUs from '../components/ContactUs';
 import Faq from '../components/Faq';
 import FeatureSection from '../components/FeatureSection';
@@ -8,6 +8,7 @@ import FeatureShowcase from '../components/FeatureShowcase';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Performance from '../components/Performance';
+import PricingSection from '../components/PricingSection';
 import ProfitLoss from '../components/ProfitLoss';
 import Trader from '../components/Trader';
 import WhatsAppButton from '../components/WhatsappButton';
@@ -21,7 +22,8 @@ const Home = () => {
       <Heroes />
 
       <div className="bg-[#0a0f1a]">
-      <Chart />
+      {/* <Chart /> */}
+      <PricingSection/>
       <Performance/>
       <ProfitLoss />
       <Trader/>

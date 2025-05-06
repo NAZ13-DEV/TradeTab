@@ -3,11 +3,85 @@
 @tailwind utilities;
 
 
+
+@layer utilities {
+  .text-customGreen {
+    @apply text-emerald-400;
+  }
+
+  .bg-customGreen {
+    @apply bg-emerald-600;
+  }
+
+  .text-customRed {
+    @apply text-red-400;
+  }
+
+  .bg-customRed {
+    @apply bg-red-600;
+  }
+
+  .border-customGreen {
+    @apply border-emerald-600;
+  }
+
+  .border-customRed {
+    @apply border-red-600;
+  }
+}
+
+
+
 @layer base {
     html {
       font-family: 'Outfit', sans-serif;
     }
   }
+
+@layer components {
+  .forex-form-theme {
+    @apply bg-[#050A1D] bg-gradient-to-br from-emerald-400/10 via-emerald-500/20 to-transparent p-4 rounded-xl text-white;
+  }
+
+  .forex-form-theme input,
+  .forex-form-theme select,
+  .forex-form-theme textarea {
+    @apply bg-[#0a1227] border border-emerald-600 text-white placeholder-gray-400 rounded-md px-3 py-2 w-full outline-none focus:ring-2 focus:ring-emerald-500;
+  }
+
+  .forex-form-theme select option {
+    @apply bg-[#0a1227] text-white;
+  }
+
+  .forex-form-theme button {
+    @apply font-semibold rounded-md px-4 py-2 transition-all duration-300;
+  }
+
+  /* Specific color overrides */
+  .forex-form-theme .buy-header {
+    @apply text-customGreen;
+  }
+
+  .forex-form-theme .sell-header {
+    @apply text-customRed;
+  }
+
+  .forex-form-theme .buy-button {
+    @apply bg-customGreen hover:bg-emerald-500 text-white;
+  }
+
+  .forex-form-theme .sell-button {
+    @apply bg-customRed hover:bg-red-400 text-white;
+  }
+
+  .forex-form-theme .buy-border {
+    @apply border-customGreen;
+  }
+
+  .forex-form-theme .sell-border {
+    @apply border-customRed;
+  }
+}
 
 
   .custom-scrollbar {
@@ -127,26 +201,6 @@ select {
 }
 
 
-/* forexpair.module.css or global.css */
-.forex-form-theme {
-  @apply bg-[#050A1D] bg-gradient-to-br from-emerald-400/10 via-emerald-500/20 to-transparent p-4 rounded-xl text-white;
-
-  /* Targets all inputs, selects, and textareas inside */
-}
-
-.forex-form-theme input,
-.forex-form-theme select,
-.forex-form-theme textarea {
-  @apply bg-[#0a1227] border border-emerald-600 text-white placeholder-gray-400 rounded-md px-3 py-2 w-full outline-none focus:ring-2 focus:ring-emerald-500;
-}
-
-.forex-form-theme select option {
-  @apply bg-[#0a1227] text-white;
-}
-
-.forex-form-theme button {
-  @apply bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-md px-4 py-2 transition-all duration-300;
-}
 
 @media (max-width: 768px) {
   .custom-scrollbar-x::-webkit-scrollbar {

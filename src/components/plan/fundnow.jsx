@@ -64,6 +64,9 @@ const FundNow = ({
           sessionGetUserID: localStorage.getItem('uId'),
           companyWallet: wallet,
           selectedPlan: plan,
+          createdAt: new Date().toLocaleString('en-US', {
+            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,}),
+          
         };
 
         const depositResponse = await api.post('plandepositPage', payload);

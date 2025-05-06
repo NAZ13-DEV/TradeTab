@@ -44,12 +44,16 @@ export default function UploadProof() {
 
     const storedUserId = localStorage.getItem("uId");
     const formData = new FormData();
+    const createdAt = new Date().toLocaleString('en-US', {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,});
     formData.append("frontFile", frontFile);
     if (selectedOption === "Driving License") {
       formData.append("backFile", backFile);
     }
     formData.append("kycType", selectedOption);
     formData.append("userid", storedUserId);
+    formData.append("createdAt", createdAt)
+   
 
     setIsLoading(true);
     try {

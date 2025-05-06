@@ -25,7 +25,7 @@ class DepositGateway
     public function sharePage($depositPagedata)
     {
         try {
-            $depositColumnArray = ['amtValue', 'amount', 'transMethod', 'userid', 'Wallet','createdAt', 'transId', 'userBalance', 'transStatus',  'noOfShares' ];
+            $depositColumnArray = ['amtValue', 'amount', 'transMethod', 'userid', 'Wallet', 'transId', 'userBalance', 'transStatus',  'noOfShares' ];
             $result = $this->createDbTables->createTable(Shares, $depositColumnArray);
             if ($result === true || $result === null) {
                 $fetchUserWithIdcond = ['id' => $depositPagedata['sessionGetUserID']];
@@ -41,7 +41,7 @@ class DepositGateway
                 if ($inserted) {
                     $h = 'Deposit Initiated';
                     $c = 'Your deposit of '.$fetchUserWithId['currency'].''.$depositPagedata['cryptoAmt'].' has been received and is currently awaiting approval. you will be notified once the approval process is complete.';
-                    $message = $this->gateway->createNotificationMessage($depositPagedata['sessionGetUserID'], $h, $c,$depositPagedata['createdAt'] ?? null);
+                    $message = $this->gateway->createNotificationMessage($depositPagedata['sessionGetUserID'], $h, $c);
                     if ($message) {
                         // $sent = $this->mailsender->sendRegistrationEmail($userEmail, $userFullname, $userId, $EncrypteduserEmail, $encodedId);
                         // if ($sent === true) {
@@ -134,11 +134,8 @@ class DepositGateway
     }
     public function depositPage($depositPagedata)
     {
-        // var_dump($depositPagedata);
-
         try {
-            $depositColumnArray = ['amtValue', 'amount', 'transMethod', 'userid', 'Wallet', 'createdAt', 'transId', 'balance', 'transStatus'];
-            
+            $depositColumnArray = ['amtValue', 'amount', 'transMethod', 'userid', 'Wallet','createdAt', 'transId', 'balance', 'transStatus'];
             $result = $this->createDbTables->createTable(depositTable, $depositColumnArray);
             unset($depositPagedata['selectedPlan']);
             if ($result === true || $result === null) {
@@ -150,13 +147,13 @@ class DepositGateway
                 // $depositPagedata['dateOfTrans'] = date('d-m-Y h:i:s a', time());
                 // $depositPagedata['dateOfTrans'] = date('d-m-Y h:i:s a', time());
                 $depositBindingArray = $this->gateway->generateRandomStrings($depositPagedata);
-                // var_dump($depositPagedata, $depositColumnArray);
+                // var_dump($depositPagedata,$depositColumnArray);
                 
                 $inserted = $this->conn->insertData($this->pdovar, depositTable, $depositColumnArray, $depositBindingArray, $depositPagedata);
                 if ($inserted) {
                     $h = 'Deposit initiated';
                     $c = 'Your deposit of '.$fetchUserWithId['currency'].''.$depositPagedata['cryptoAmt'].' has been received and is currently awaiting approval. you will be notified once the approval process is complete.';
-                    $message = $this->gateway->createNotificationMessage($depositPagedata['sessionGetUserID'], $h, $c, $depositPagedata['createdAt'] ?? null);
+                    $message = $this->gateway->createNotificationMessage($depositPagedata['sessionGetUserID'], $h, $c,$depositPagedata['createdAt']);
                     if ($message) {
                         // $sent = $this->mailsender->sendRegistrationEmail($userEmail, $userFullname, $userId, $EncrypteduserEmail, $encodedId);
                         // if ($sent === true) {
@@ -202,7 +199,7 @@ class DepositGateway
     public function plandepositPage($plandepositPagedata)
     { 
         try {
-            $depositColumnArray = ['cryptovalue', 'cryptoAmt', 'netWork', 'sessionGetUserID', 'companyWallet', 'selectedPlan','createdAt', 'transId', 'balance', 'transStatus'];
+            $depositColumnArray = ['cryptovalue', 'cryptoAmt', 'netWork', 'sessionGetUserID', 'companyWallet', 'selectedPlan', 'createdAt', 'transId', 'balance', 'transStatus'];
             $result = $this->createDbTables->createTable(usersPlan, $depositColumnArray);
             if ($result === true || $result === null) {
                 $fetchUserWithIdcond = ['id' => $plandepositPagedata['sessionGetUserID']];
@@ -211,12 +208,13 @@ class DepositGateway
                 $plandepositPagedata['balance'] = $fetchUserWithId['balance'];
                 $plandepositPagedata['transStatus'] = 'Pending';
                 // $plandepositPagedata['dateOfTrans'] = date('d-m-Y h:i:s a', time());
+                // var_dump($plandepositPagedata,$depositColumnArray);
                 $depositBindingArray = $this->gateway->generateRandomStrings($plandepositPagedata);
                 $inserted = $this->conn->insertData($this->pdovar, usersPlan, $depositColumnArray, $depositBindingArray, $plandepositPagedata);
                 if ($inserted) {
                     $h = 'Subscription Deposit initiated';
                     $c = 'Your deposit of '.$fetchUserWithId['currency'].''.$plandepositPagedata['cryptoAmt'].' for the plan subscription '.$plandepositPagedata['selectedPlan'].' has been received and is currently awaiting approval. you will be notified once the approval process is complete.';
-                    $message = $this->gateway->createNotificationMessage($plandepositPagedata['sessionGetUserID'], $h, $c,$plandepositPagedata['createdAt'] ?? null);
+                    $message = $this->gateway->createNotificationMessage($plandepositPagedata['sessionGetUserID'], $h, $c, $plandepositPagedata['createdAt']);
                     if ($message) {
                         // $sent = $this->mailsender->sendRegistrationEmail($userEmail, $userFullname, $userId, $EncrypteduserEmail, $encodedId);
                         // if ($sent === true) {

@@ -43,7 +43,7 @@ class UserGateway
             'encryptedPassword' => 'VARCHAR(200) NULL DEFAULT NULL',
             'Plan' => 'VARCHAR(200) NULL DEFAULT NULL',
             'currency' => 'VARCHAR(200) NULL DEFAULT NULL',
-            'createdAt' => 'DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
+            'dateOc' => 'VARCHAR(200) NULL DEFAULT NULL',
             'userid' => 'VARCHAR(200) NULL DEFAULT NULL',
             'ip' => 'VARCHAR(200) NULL DEFAULT NULL',
             'img' => 'VARCHAR(200) NULL DEFAULT NULL',
@@ -74,7 +74,7 @@ class UserGateway
         $data['encryptedPassword'] = password_hash(trim($data['password']), PASSWORD_DEFAULT);
         $data['plan'] = NULL;
         $data['currency'] = '$';
-        $data['dateOc'] = date('Y-m-d H:i:s');
+        // $data['dateOc'] = Null;
         $data['userId'] = $this->gateway->genRandomAlphanumericstrings(10);
         $data['ip'] = $this->gateway->getIPAddress();
         $data['img'] = NULL;
@@ -100,7 +100,7 @@ class UserGateway
         $data['name_of_code'] = NULL;
         $data['withd'] = NULL;
         $data['signal_message'] = NULL;
-        // var_dump($data,$columns);
+        var_dump($data,$columns);
 
         $conditions = [
             'email' => $data['email']
@@ -145,7 +145,7 @@ class UserGateway
                                 // if ($referrer === 'null' || $referrer === "") {
                                 $h = 'Successful Registration';
                                 $c = 'Congratulations! your registration was successful.';
-                                $message = $this->gateway->createNotificationMessage($id, $h, $c,$data['createdAt'] ?? null);
+                                $message = $this->gateway->createNotificationMessage($id, $h, $c,$data['dateOc']);
                                 if ($message) {
                                     // $h = 'Successful Referral';
                                     // $c = 'You just made a successful referral and it is currently awaiting approval. You will be notified once it has been processed.';
@@ -287,10 +287,11 @@ class UserGateway
         $drivingLicenseBack = json_encode($this->gateway->processImageWithgivenNameFiles($file['backFile'] ?? null));
         $drivingLicenseFront = json_encode($this->gateway->processImageWithgivenNameFiles($file['frontFile'] ?? null));
         $userId = $id['userid'];
-        $date = date('Y-m-d H:i:s');
+        $date = $id['createdAt'];
         // try {
-        $walletColumnArray = ['userid', 'DocumentType', 'FrontView', 'BackView', 'Status', 'submitDate', 'approveDate','createdAt'];
+        $walletColumnArray = ['userid', 'DocumentType', 'FrontView', 'BackView', 'Status', 'submitDate', 'approveDate'];
         $result = $this->createDbTables->createTable(kyc, $walletColumnArray);
+        var_dump($id);
         if ($result === true || $result === null) {
             $data = [$userId, $id['kycType'], $drivingLicenseFront, $drivingLicenseBack, 'pending', $date, null];
             $walletBindingArray = $this->gateway->generateRandomStrings($data);
@@ -303,7 +304,7 @@ class UserGateway
                 if ($updated) {
                     $h = 'KYC Upload Success';
                     $c = 'Congratulations! your kyc documents have been successfully uploaded.';
-                    $message = $this->gateway->createNotificationMessage($userId, $h, $c,$walletColumnArray['createdAt'] ?? null);
+                    $message = $this->gateway->createNotificationMessage($userId, $h, $c,$date);
                     if ($message) {
                         // $sent = $this->mailsender->sendRegistrationEmail($userEmail, $userFullname, $userId, $EncrypteduserEmail, $encodedId);
                         // if ($sent === true) {
@@ -355,21 +356,88 @@ class UserGateway
     }
 
     public function updateProfilePics(array $id, array $file)
-    {
-        $img = $this->gateway->processImageWithgivenNameFiles($file['documents']);
-        $userId = $id['id'];
-        $whereColumnisEqualTo = [$img];
-        $columnsToUpdate = ['img'];
+{
+    $img = $this->gateway->processImageWithgivenNameFiles($file['documents']);
+    $userId = $id['id'];
+   
+    $createdAt = $_POST['createdAt'] ?? null;
+    if (!$createdAt) {
+        $this->response->respondUnprocessableEntity(['createdAt is missing']);
+        return;
+    }
+
+    $whereColumnisEqualTo = [$img];
+    $columnsToUpdate = ['img'];
+    $columnOfUpdateForUser = 'id';
+
+    $updateUserStatus = $this->conn->updateData(
+        $this->pdovar,
+        RegTable,
+        $columnsToUpdate,
+        $whereColumnisEqualTo,
+        $columnOfUpdateForUser,
+        $userId
+    );
+
+    if ($updateUserStatus) {
+        $h = 'Profile Picture Update Confirmation';
+        $c = 'You just updated your profile picture.';
+        $message = $this->gateway->createNotificationMessage($userId, $h, $c, $createdAt);
+
+        if ($message) {
+            return $this->response->respondCreated('your profile picture has been updated successfully');
+        } else {
+            $errors[] = 'could not insert message';
+            if (!empty($errors)) {
+                $this->response->respondUnprocessableEntity($errors);
+                return;
+            }
+        }
+    }
+}
+
+
+  public function updateUserPasswordByUSer(array $passwordDetails, $id)
+{
+    $userId = $id;
+    $conditions = ['id' => $id];
+
+    $currentUserPassword = $passwordDetails['currentPassword'];
+    $newUserPassword = $passwordDetails['newPassword'];
+    $createdAt = $passwordDetails['createdAt'] ;
+
+    // var_dump($createdAt);
+
+
+    $fetchUserDetailsWithEmail = $this->gateway->fetchData(RegTable, $conditions);
+    $userEncryptedPassword = $fetchUserDetailsWithEmail['encryptedPassword'];
+    $verifyPassword = password_verify($currentUserPassword, $userEncryptedPassword);
+
+    if (!$verifyPassword) {
+        $errors[] = 'incorrect password';
+        if (!empty($errors)) {
+            $this->response->respondUnprocessableEntity($errors);
+            return;
+        }
+    }
+
+    if ($verifyPassword) {
+        $newlyEncryptedpassword = password_hash($newUserPassword, PASSWORD_DEFAULT);
+        $whereColumnisEqualTo = [$newUserPassword, $newlyEncryptedpassword];
+        $columnsToUpdate = ['Password', 'encryptedPassword'];
         $columnOfUpdateForUser = 'id';
+
         $updateUserStatus = $this->conn->updateData($this->pdovar, RegTable, $columnsToUpdate, $whereColumnisEqualTo, $columnOfUpdateForUser, $userId);
         if ($updateUserStatus) {
-            $h = 'Profile Picture Update Confirmation';
-            $c = 'You just updated your profile picture. ';
-            $message = $this->gateway->createNotificationMessage($userId, $h, $c);
+            $h = 'Password Update Confirmation';
+            $c = 'You just updated your password. Your account security is now enhanced.';
+            $s = $createdAt; // use value sent from frontend
+
+            $message = $this->gateway->createNotificationMessage($fetchUserDetailsWithEmail['id'], $h, $c, $s);
             if ($message) {
-                return $this->response->respondCreated('your profile picture has been updated successfully');
+                return $this->response->respondCreated('Your password has been updated successfully');
             } else {
-                $errors[] = 'could not insert message';
+                $errors[] = 'Could not insert message';
                 if (!empty($errors)) {
                     $this->response->respondUnprocessableEntity($errors);
                     return;
@@ -377,49 +445,8 @@ class UserGateway
             }
         }
     }
+}
 
-    public function updateUserPasswordByUSer(array $passwordDetails, $id)
-    {
-        $userId = $id;
-        $conditions = ['id' => $id];
-        $currentUserPassword = $passwordDetails['currentPassword'];
-        $newUserPassword = $passwordDetails['newPassword'];
-        $fetchUserDetailsWithEmail = $this->gateway->fetchData(RegTable, $conditions);
-        $userEncryptedPassword = $fetchUserDetailsWithEmail['encryptedPassword'];
-        $verifyPassword = password_verify($currentUserPassword, $userEncryptedPassword);
-        if (!$verifyPassword) {
-            $errors[] = 'incorrect password';
-            if (!empty($errors)) {
-                $this->response->respondUnprocessableEntity($errors);
-                return;
-            }
-        }
-
-        if ($verifyPassword) {
-            $newlyEncryptedpassword = password_hash($newUserPassword, PASSWORD_DEFAULT);
-            $whereColumnisEqualTo = [$newUserPassword, $newlyEncryptedpassword];
-            $columnsToUpdate = [
-                'Password',
-                'encryptedPassword',
-            ];
-            $columnOfUpdateForUser = 'id';
-            $updateUserStatus = $this->conn->updateData($this->pdovar, RegTable, $columnsToUpdate, $whereColumnisEqualTo, $columnOfUpdateForUser, $userId);
-            if ($updateUserStatus) {
-                $h = 'Password Update Confirmation';
-                $c = 'You just updated your password. your account security is now enhanced.';
-                $message = $this->gateway->createNotificationMessage($fetchUserDetailsWithEmail['id'], $h, $c);
-                if ($message) {
-                    return $this->response->respondCreated('your password has been updated successfully');
-                } else {
-                    $errors[] = 'could not insert message';
-                    if (!empty($errors)) {
-                        $this->response->respondUnprocessableEntity($errors);
-                        return;
-                    }
-                }
-            }
-        }
-    }
 
     public function updateuserDetails(array $file)
     {
@@ -1035,6 +1062,7 @@ class UserGateway
         }
     }
 
+   
     public function saveTrade($data)
     {
         // var_dump($data);
@@ -1054,15 +1082,15 @@ class UserGateway
             'status' => 'VARCHAR(200) NULL DEFAULT NULL',
             'amt_earned' => 'VARCHAR(200) NULL DEFAULT NULL'
         ];
-        $data['dateOc'] = date('Y-m-d H:i:s');
+        $data['dateo'] = date('d-m-Y h:i:s a', time());
         $data['trans_id'] = $this->gateway->genRandomAlphanumericstrings(10);
         $data['status'] = 'Pending';
         $data['amt_earned'] = null;
         $userid = $data['userId'];
-        $trading = $data['tradingPair'];
+        $trading = $data['trading_pairs'];
         $amt = $data['amount'];
         $sell_pair = $data['symbol'];
-        $duration = $data['interval'];
+        $duration = $data['Intervah'];
         $leverage = $data['leverage'];
         $takeprofit = $data['takeProfit'];
         $EntryPrice = $data['entryPrice'];
@@ -1071,7 +1099,7 @@ class UserGateway
         $tradeId = $data['trade'] ?? null;
         unset($data['trade']);
         $fetchUser = $this->gateway->getUserIdFromUserTable(RegTable, $userid);
-        var_dump($data, $columns);
+        // var_dump($data, $columns);
         $balance = $fetchUser['balance'] - $amt;
         $total_depo = $fetchUser['total_depo'] - $amt;
         $updateColumn = ['balance', 'total_depo'];
@@ -1092,9 +1120,9 @@ class UserGateway
                         if ($id) {
                             if (!empty($id)) {
                                 $data['currency'] = $fetchUser['currency'];
-                                $h = 'your trade has been successfully placed.';
+                                $h = 'Your trade has been successfully placed.';
                                 $fetchTrade = $this->gateway->getUserIdFromUserTable(trade, $id);
-                                $c = 'Here are the details your trading pair is ' . $trading . ' 
+                                $c = 'here are the details your trading pair is ' . $trading . ' 
                                             Amount: $' . $amt . '
                                             Symbol: ' . $sell_pair . '
                                             Interval: ' . $duration . '
@@ -1147,8 +1175,8 @@ class UserGateway
                 if (is_int($tradeId)) {
                     $fetchTrade = $this->gateway->getUserIdFromUserTable(trade, $tradeId);
 
-                    $balance = $fetchUser['balance'] - $amt + $fetchTrade['amount'];
-                    $total_depo = $fetchUser['total_depo'] - $amt + $fetchTrade['amount'];
+                    $balance = $fetchUser['balance'] - $amt + $fetchTrade['amount'] ;
+                    $total_depo = $fetchUser['total_depo'] - $amt + $fetchTrade['amount'] ;
                     $updateColumn = ['balance', 'total_depo'];
                     $columnData = [$balance, $total_depo];
                     $updateUserBalance = $this->conn->updateData($this->pdovar, RegTable, $updateColumn, $columnData, 'id', $userid);
@@ -1160,8 +1188,8 @@ class UserGateway
                             $data['currency'] = $fetchUser['currency'];
                             $fetchTrade = $this->gateway->getUserIdFromUserTable(trade, $tradeId);
 
-                            $h = 'Your Trade Has Been Updated';
-                            $c = 'Here are the details your trading pair is ' . $trading . ' 
+                            $h = 'Your trade has been updated';
+                            $c = 'here are the details your trading pair is ' . $trading . ' 
                                     Amount: $' . $amt . '
                                     Symbol: ' . $sell_pair . '
                                     Interval: ' . $duration . '

@@ -20,7 +20,7 @@ const Hero = () => {
         Track Trades, <span className="text-green-400">Grow Profits</span><br /> & Master Strategy
       </h1>
       <p className="mb-8 text-lg text-gray-300">
-        TradeTab’s powerful trading journal gives you focus, clarity and real-time edge.
+        {`Crown Exchange's powerful trading journal gives you focus, clarity and real-time edge.`}
       </p>
     </section>
   );

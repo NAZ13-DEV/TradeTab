@@ -103,9 +103,9 @@ document.addEventListener('DOMContentLoaded', function () {
         userid,
         Wallet,
         transId,
-        userBalance,
+        balance,
         transStatus,
-        dateOfTrans,
+        createdAt,
       } = element.deposit;
       html += `
 <tr>
@@ -117,9 +117,9 @@ document.addEventListener('DOMContentLoaded', function () {
 <td>${userid}</td>
 <td>${Wallet}</td>
 <td>${transId}</td>
-<td>${userBalance}</td>
+<td>${balance}</td>
 <td>${transStatus}</td>
-<td>${dateOfTrans}</td>
+<td>${createdAt}</td>
 <td>
   <button data-user-id="${id}" class="btn btn-warning btn-md edit-deposit-details">Edit deposit details</button>
 </td>

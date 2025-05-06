@@ -76,16 +76,15 @@ const History = () => {
                 {tabData.map(({ label }, index) => (
                   <Tab key={index} as={Fragment}>
                     {({ selected }) => (
-                  <button
-                  className={`text-sm md:text-base font-semibold px-4 py-2 rounded-md transition-colors border-b-2 ${
-                    selected
-                      ? "text-emerald-400 border-emerald-400"
-                      : "text-white hover:text-emerald-300 border-transparent"
-                  }`}
-                >
-                  {label}
-                </button>
-                
+                      <button
+                        className={`text-sm md:text-base font-semibold px-4 py-2 rounded-md transition-colors border-b-2 ${
+                          selected
+                            ? "text-emerald-400 border-emerald-400"
+                            : "text-white hover:text-emerald-300 border-transparent"
+                        }`}
+                      >
+                        {label}
+                      </button>
                     )}
                   </Tab>
                 ))}
@@ -205,7 +204,7 @@ const History = () => {
                                         {dataItem.transStatus}
                                       </td>
                                       <td className="py-2 px-3">
-                                        {dataItem.dateOfTrans}
+                                        {dataItem.createdAt}
                                       </td>
                                     </>,
                                     <>
@@ -246,7 +245,7 @@ const History = () => {
                                         {parseFloat(dataItem.amount).toFixed(2)}
                                       </td>
                                       <td className="py-2 px-3">
-                                        {dataItem.dateOfTrans}
+                                         { dataItem.dateOfTrans}
                                       </td>
                                       <td className="py-2 px-3">
                                         {dataItem.payment_mode}
@@ -277,7 +276,7 @@ const History = () => {
                                         {dataItem.transStatus}
                                       </td>
                                       <td className="py-2 px-3">
-                                        {dataItem.dateOfTrans}
+                                        {dataItem.createdAt}
                                       </td>
                                     </>,
                                     <>
@@ -316,7 +315,7 @@ const History = () => {
                                         {dataItem.transStatus}
                                       </td>
                                       <td className="py-2 px-3">
-                                        {dataItem.dateOfTrans}
+                                        {dataItem.createdAt}
                                       </td>
                                     </>,
                                   ][panelIndex]

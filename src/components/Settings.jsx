@@ -20,7 +20,7 @@ const Settings = () => {
     Phone: "",
     country: "",
     Plan: "",
-    createdAt: "",
+    dateOc: "",
     userid: "",
     id: "",
   });
@@ -28,6 +28,9 @@ const Settings = () => {
   const [passwordData, setPasswordData] = useState({
     newPassword: "",
     confirmNewPassword: "",
+    createdAt: new Date().toLocaleString("en-US", {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    }),
   });
   const [currentPassword, setCurrentPassword] = useState("");
 
@@ -45,11 +48,18 @@ const Settings = () => {
 
   useEffect(() => {
     if (user) {
-      const updatedForm = { ...formData };
-      Object.keys(updatedForm).forEach((key) => {
-        updatedForm[key] = user[key] || "";
+      setFormData({
+        firstName: user?.firstName || "",
+        last_Name: user?.last_Name || "",
+        Username: user?.Username || "",
+        email: user?.email || "",
+        Phone: user?.Phone || "",
+        country: user?.country || "",
+        Plan: user?.Plan || "",
+        dateOc: user?.dateOc || "",
+        userid: user?.userid || "",
+        id: user?.id || "",
       });
-      setFormData(updatedForm);
     }
   }, [user]);
 
@@ -93,10 +103,15 @@ const Settings = () => {
         currentPassword,
         newPassword,
         confirmNewPassword,
+        createdAt: passwordData.createdAt,
       });
       toast.success("Password updated!", { id: loading });
       setCurrentPassword("");
-      setPasswordData({ newPassword: "", confirmNewPassword: "" });
+      setPasswordData({
+        newPassword: "",
+        confirmNewPassword: "",
+        createdAt: passwordData.createdAt,
+      });
     } catch {
       toast.error("Failed to update password.", { id: loading });
     }
@@ -168,7 +183,7 @@ const Settings = () => {
                   <label className="block text-sm font-medium mb-1">Created At</label>
                   <input
                     name="createdAt"
-                    value={formData.createdAt}
+                    value={formData.dateOc}
                     readOnly
                     className="w-full px-4 py-2 rounded-xl bg-[#0F1C3F] border border-slate-700 text-gray-400 cursor-not-allowed"
                   />
@@ -196,7 +211,6 @@ const Settings = () => {
             {/* PASSWORD TAB */}
             <Tab.Panel>
               <form onSubmit={handlePasswordSubmit} className="space-y-4">
-                {/* CURRENT PASSWORD */}
                 <div className="relative">
                   <label className="block mb-1 text-sm font-medium">Old Password</label>
                   <input
@@ -216,30 +230,28 @@ const Settings = () => {
                   </span>
                 </div>
 
-                {/* NEW + CONFIRM PASSWORD */}
-                {[
-                  ["newPassword", "New Password", "new"],
-                  ["confirmNewPassword", "Confirm Password", "confirm"],
-                ].map(([name, label, type]) => (
-                  <div className="relative" key={name}>
-                    <label className="block mb-1 text-sm font-medium">{label}</label>
-                    <input
-                      type={showPassword[type] ? "text" : "password"}
-                      name={name}
-                      value={passwordData[name]}
-                      onChange={handlePasswordChange}
-                      autoComplete="new-password"
-                      placeholder={label}
-                      className="w-full px-4 py-2 rounded-xl bg-[#0F1C3F] border border-slate-700 hover:border-emerald-500 focus:border-emerald-400 outline-none"
-                    />
-                    <span
-                      onClick={() => toggleVisibility(type)}
-                      className="absolute right-3 top-9 text-gray-400 cursor-pointer"
-                    >
-                      {showPassword[type] ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </span>
-                  </div>
-                ))}
+                {[["newPassword", "New Password", "new"], ["confirmNewPassword", "Confirm Password", "confirm"]].map(
+                  ([name, label, type]) => (
+                    <div className="relative" key={name}>
+                      <label className="block mb-1 text-sm font-medium">{label}</label>
+                      <input
+                        type={showPassword[type] ? "text" : "password"}
+                        name={name}
+                        value={passwordData[name]}
+                        onChange={handlePasswordChange}
+                        autoComplete="new-password"
+                        placeholder={label}
+                        className="w-full px-4 py-2 rounded-xl bg-[#0F1C3F] border border-slate-700 hover:border-emerald-500 focus:border-emerald-400 outline-none"
+                      />
+                      <span
+                        onClick={() => toggleVisibility(type)}
+                        className="absolute right-3 top-9 text-gray-400 cursor-pointer"
+                      >
+                        {showPassword[type] ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </span>
+                    </div>
+                  )
+                )}
 
                 <button
                   type="submit"

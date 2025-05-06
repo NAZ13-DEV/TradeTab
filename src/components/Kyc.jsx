@@ -27,53 +27,65 @@ const Kyc = () => {
   }, [user]);
 
   return (
-    <section className="w-full max-w-5xl px-4 py-6 mx-auto shadow-md bg-Primary-3 rounded-2xl md:p-8">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-12">
-        {currentState === 'UploadProof' && (
-          <div className="col-span-12">
-            <UploadProof isLoading={isLoading} setIsLoading={setIsLoading} />
-          </div>
-        )}
-        {currentState === 'PendingKyc' && (
-          <div className="col-span-12">
-            <KYCStatus />
-          </div>
-        )}
+    <section className="w-full max-w-6xl px-6 py-10 mx-auto rounded-2xl bg-[#0a0f1f] border border-emerald-700 shadow-xl">
+      <div className="mb-6 text-center">
+        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">
+          KYC Verification
+        </h2>
+        <p className="mt-2 text-sm text-gray-400">Verify your identity to activate all features of your account.</p>
       </div>
 
-      {/* Style override for transparent inputs */}
-      <style>
-        {`
-          input[type="text"],
-          input[type="email"],
-          input[type="file"],
-          input[type="number"],
-          textarea,
-          select {
-            background-color: transparent !important;
-            color: #E6E6E6 !important;
-            border: 1px solid #4B5563;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
-            width: 100%;
-            transition: border 0.2s ease;
-          }
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+        <div className="col-span-12">
+          {currentState === 'UploadProof' && (
+            <UploadProof isLoading={isLoading} setIsLoading={setIsLoading} />
+          )}
+          {currentState === 'PendingKyc' && <KYCStatus />}
+        </div>
+      </div>
 
-          input:focus,
-          textarea:focus,
-          select:focus {
-            outline: none;
-            border-color: #10B981;
-          }
+      <style>{`
+        input[type="text"],
+        input[type="email"],
+        input[type="file"],
+        input[type="number"],
+        textarea,
+        select {
+          background-color: #111827 !important;
+          color: #E5E7EB !important;
+          border: 1px solid #334155;
+          padding: 0.65rem 1rem;
+          border-radius: 0.5rem;
+          width: 100%;
+          transition: border-color 0.2s ease;
+        }
 
-          label {
-            color: #D1D5DB;
-            font-size: 0.875rem;
-            margin-bottom: 0.25rem;
-            display: inline-block;
-          }
-        `}
-      </style>
+        input:focus,
+        textarea:focus,
+        select:focus,input:hover {
+          outline: none;
+          border-color: #10B981;
+        }
+
+        label {
+          color: #9CA3AF;
+          font-size: 0.875rem;
+          margin-bottom: 0.25rem;
+          display: inline-block;
+        }
+
+        .btn-primary {
+          background: linear-gradient(to right, #10B981, #059669);
+          color: #ffffff;
+          padding: 0.5rem 1.5rem;
+          border-radius: 0.375rem;
+          transition: opacity 0.2s ease;
+        }
+
+        .btn-primary:hover {
+          opacity: 0.9;
+        }
+      `}</style>
     </section>
   );
 };

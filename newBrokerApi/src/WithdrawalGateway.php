@@ -157,7 +157,7 @@ $toValue = (float)$userFetchDetailsWithId[$sto];
     public function CryptoWithdrawal(array $CryptoWithdrawaldata)
     {
         // try {
-            $CryptoWithdrawalcolumn = ["userId", "payment_mode", "amount", "wallet", "transId", "transStatus"];
+            $CryptoWithdrawalcolumn = ["userId", "payment_mode", "amount", "wallet","createdAt", "transId", "transStatus"];
             $result = $this->createDbTables->createTable(cryptwithdrawalTable, $CryptoWithdrawalcolumn);
             if ($result === true || $result === null) {
                 $CryptoWithdrawaldata['transId'] = $this->gateway->genRandomAlphanumericstrings(10);
@@ -171,7 +171,7 @@ $toValue = (float)$userFetchDetailsWithId[$sto];
                 if ($inserted) {
                     $h = 'Crypto Withdrawal Confirmation';
                     $c = 'You just withdrew '.$CryptoWithdrawaldata['amount'].' from your account, using '.$CryptoWithdrawaldata['payment_mode'].' to this wallet '.$CryptoWithdrawaldata['wallet'].' your transaction is awaiting approval.';
-                    $message = $this->gateway->createNotificationMessage($CryptoWithdrawaldata['userId'], $h, $c);
+                    $message = $this->gateway->createNotificationMessage($CryptoWithdrawaldata['userId'], $h, $c,$CryptoWithdrawaldata['createdAt']);
                     if ($message) {
                         // $sent = $this->mailsender->sendRegistrationEmail($userEmail, $userFullname, $userId, $EncrypteduserEmail, $encodedId);
                         // if ($sent === true) {
