@@ -52,19 +52,29 @@ const ForexPair = ({
   }, [dispatch]);
 
   const transformKeys = (fields) => {
- return {
-  amount: fields.amount,
-  Symbol: fields.symbol,
-  Intervah: fields.interval,
-  Leverage: fields.leverage,
-  stploss: fields.stopLoss,
-  takeprofit: fields.takeProfit,
-  EntryPrice: fields.entryPrice,
-  tradeType: fields.tradeType,
-  trading_pairs: fields.tradingPair,
-  userId: fields.userId,            // ✅ key fixed here
-  trade: fields.trade || null,
-};
+    return {
+      amount: fields.amount,
+      symbol: fields.symbol,             // for PHP logic
+      Symbol: fields.symbol,             // for DB
+      interval: fields.interval,         // for PHP logic ($data['interval'])
+      Intervah: fields.interval,         // for DB insert
+      Leverage: fields.leverage,
+      stploss: fields.stopLoss,
+      takeprofit: fields.takeProfit,
+      EntryPrice: fields.entryPrice,
+      tradeType: fields.tradeType,
+      tradingPair: fields.tradingPair,      // for PHP logic
+      trading_pairs: fields.tradingPair,    // for DB insert
+      userId: fields.userId,
+      trade: fields.trade || null,
+      dateo: new Date().toLocaleString('en-US', {
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,}),
+    };
+    
+    
+    
+    
+    
 
     
     
@@ -135,12 +145,12 @@ const ForexPair = ({
 
   return (
     <>
-      <div className='mt-6 gap-6 grid grid-cols-12 forex-form-theme'>
+      <div className='grid grid-cols-12 gap-6 mt-6 forex-form-theme'>
         {/* Quick Buy Form */}
-        <div className='bg-Primary-bg rounded-xl p-4 lg:px-7 lg:py-6 col-span-12 xl:col-span-6'>
+        <div className='col-span-12 p-4 bg-Primary-bg rounded-xl lg:px-7 lg:py-6 xl:col-span-6'>
           <form onSubmit={handleBuySubmit} ref={buyFormRef}>
             <Toaster position='top-center' />
-            <div className='flex gap-3 flex-wrap justify-between items-center mb-6 scrollable-container'>
+            <div className='flex flex-wrap items-center justify-between gap-3 mb-6 scrollable-container'>
             <div className='h-[700px] lg:h-[700px] w-full'>
               {/* Embed TradingView Widget */}
               <h5 className='text-base text-customGreen font-bold leading-[24px] mb-3 text-center'>
@@ -155,7 +165,7 @@ const ForexPair = ({
                   onChange={(e) => setFieldValue('amount', e.target.value)}
                 />
               </div>
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <select
                   className='flex-1  items-center outline-none h-[4rem] relative w-full rounded-lg text-Neutral-6 bg-Primary-3 text-left sm:text-sm cursor-pointer px-4 py-5'
                   name='trading'
@@ -235,13 +245,13 @@ const ForexPair = ({
                             <option value="NZD/USD">NZD/USD</option>
                 </select>
                 <button
-                  className='basis-1/10 text-white bg-customGreen p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg basis-1/10 bg-customGreen'
                   type='button'
                 >
                   Symbol
                 </button>
               </div>
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <select
                   className='flex-1  items-center outline-none h-[4rem] relative w-full rounded-lg text-Neutral-6 bg-Primary-3 text-left sm:text-sm cursor-pointer px-4 py-5'
                   name='trading'
@@ -259,14 +269,14 @@ const ForexPair = ({
                   <option value='86400'>1 day</option>
                 </select>
                 <button
-                  className='basis-1/10 text-white bg-customGreen p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg basis-1/10 bg-customGreen'
                   type='button'
                 >
                   TIME INTERVAL
                 </button>
               </div>
           
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <input
                   type='text'
                   placeholder='0.0000'
@@ -275,13 +285,13 @@ const ForexPair = ({
                   onChange={(e) => setFieldValue('entryPrice', e.target.value)}
                 />
                 <button
-                  className=' text-white bg-customGreen p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg bg-customGreen'
                   type='button'
                 >
                   Entry Price
                 </button>
               </div>
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <select
                   className='flex-1  items-center outline-none h-[4rem] relative w-full rounded-lg text-Neutral-6 bg-Primary-3 text-left sm:text-sm cursor-pointer px-4 py-5'
                   name='trading'
@@ -339,13 +349,13 @@ const ForexPair = ({
                   </option>
                 </select>
                 <button
-                  className='basis-1/10 text-white bg-customGreen p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg basis-1/10 bg-customGreen'
                   type='button'
                 >
                   TRADE LEVERAGE
                 </button>
               </div>
-                   <div className='flex mt-6 gap-5'>
+                   <div className='flex gap-5 mt-6'>
                 <input
                   type='text'
                   placeholder='0.0000'
@@ -354,13 +364,13 @@ const ForexPair = ({
                   onChange={(e) => setFieldValue('takeProfit', e.target.value)}
                 />
                 <button
-                  className=' text-white bg-customGreen p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg bg-customGreen'
                   type='button'
                 >
                  TP[TAKE PROFIT]
                 </button>
               </div>
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <input
                   type='text'
                   placeholder='0.0000'
@@ -369,14 +379,14 @@ const ForexPair = ({
                   onChange={(e) => setFieldValue('stopLoss', e.target.value)}
                 />
                 <button
-                  className=' text-white bg-customGreen p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg bg-customGreen'
                   type='button'
                 >
                   SL [STOP LOSS]
                 </button>
               </div>
  
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <button
                   type='submit'
                   className='mt-4 px-4 py-2 text-white font-semibold leading-[18px] border border-Neutral-8 rounded-lg hover:bg-Neutral-8 w-full'
@@ -392,9 +402,9 @@ const ForexPair = ({
         </div>
 
         {/* Quick Sell Form */}
-        <div className='bg-Primary-bg rounded-xl p-4 lg:px-7 lg:py-6 col-span-12 xl:col-span-6'>
+        <div className='col-span-12 p-4 bg-Primary-bg rounded-xl lg:px-7 lg:py-6 xl:col-span-6'>
           <form onSubmit={handleSellSubmit} ref={sellFormRef}>
-          <div className='flex gap-3 flex-wrap justify-between items-center mb-6 scrollable-container'>
+          <div className='flex flex-wrap items-center justify-between gap-3 mb-6 scrollable-container'>
             <div className='h-[700px] lg:h-[700px] w-full'>
               {/* Embed TradingView Widget */}
               <h5 className='text-base text-customRed font-bold leading-[24px] mb-3 text-center'>
@@ -409,7 +419,7 @@ const ForexPair = ({
                   onChange={(e) => setSellFieldValue('amount', e.target.value)}
                 />
               </div>
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <select
                   className='flex-1  items-center outline-none h-[4rem] relative w-full rounded-lg text-Neutral-6 bg-Primary-3 text-left sm:text-sm cursor-pointer px-4 py-5'
                   name='trading'
@@ -489,13 +499,13 @@ const ForexPair = ({
                   <option value='NZD/USD'>NZD/USD</option>
                 </select>
                 <button
-                  className='basis-1/10 text-white bg-customRed p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg basis-1/10 bg-customRed'
                   type='button'
                 >
                   Symbol
                 </button>
               </div>
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <select
                   className='flex-1  items-center outline-none h-[4rem] relative w-full rounded-lg text-Neutral-6 bg-Primary-3 text-left sm:text-sm cursor-pointer px-4 py-5'
                   name='trading'
@@ -515,13 +525,13 @@ const ForexPair = ({
                   <option value='86400'>1 day</option>
                 </select>
                 <button
-                  className='basis-1/10 text-white bg-customRed p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg basis-1/10 bg-customRed'
                   type='button'
                 >
                   TIME INTERVAL
                 </button>
               </div>
-         <div className='flex mt-6 gap-5'>
+         <div className='flex gap-5 mt-6'>
                 <input
                   type='text'
                   placeholder='0.0000'
@@ -532,13 +542,13 @@ const ForexPair = ({
                   }
                 />
                 <button
-                  className=' text-white bg-customRed p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg bg-customRed'
                   type='button'
                 >
                   Entry Price
                 </button>
               </div>
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <select
                   className='flex-1  items-center outline-none h-[4rem] relative w-full rounded-lg text-Neutral-6 bg-Primary-3 text-left sm:text-sm cursor-pointer px-4 py-5'
                   name='trading'
@@ -598,7 +608,7 @@ const ForexPair = ({
                   </option>
                 </select>
                 <button
-                  className='basis-1/10 text-white bg-customRed p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg basis-1/10 bg-customRed'
                   type='button'
                 >
                   TRADE LEVERAGE
@@ -606,7 +616,7 @@ const ForexPair = ({
               </div>
 
       
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <input
                   type='text'
                   placeholder='0.0000'
@@ -617,13 +627,13 @@ const ForexPair = ({
                   }
                 />
                 <button
-                  className=' text-white bg-customRed p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg bg-customRed'
                   type='button'
                 >
                 TP[TAKE PROFIT]
                 </button>
               </div>
-                      <div className='flex mt-6 gap-5'>
+                      <div className='flex gap-5 mt-6'>
                 <input
                   type='text'
                   placeholder='0.0000'
@@ -634,14 +644,14 @@ const ForexPair = ({
                   }
                 />
                 <button
-                  className=' text-white bg-customRed p-2 rounded-lg'
+                  className='p-2 text-white rounded-lg bg-customRed'
                   type='button'
                 >
                    SL [STOP LOSS]
                 </button>
               </div>
           
-              <div className='flex mt-6 gap-5'>
+              <div className='flex gap-5 mt-6'>
                 <button
                   type='submit'
                   className='mt-4 px-4 py-2 text-white font-semibold leading-[18px] border border-customRed rounded-lg hover:bg-customRed w-full'

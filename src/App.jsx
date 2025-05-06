@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import AOS from "aos";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -23,6 +23,32 @@ import Verify from "./pages/Verify";
 // routes
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import ResetPassword from "./pages/ResetPassword";
+
+const titleMap = {
+  "/": "Home | Crown Exchange",
+  "/home": "Home | Crown Exchange",
+  "/metrics": "Metrics | Crown Exchange",
+  "/journal": "Journal | Crown Exchange",
+  "/forexCalculator": "Forex Calculator | Crown Exchange",
+  "/freeUniversity": "Free University | Crown Exchange",
+  "/login": "Login | Crown Exchange",
+  "/register": "Register | Crown Exchange",
+  "/forgotPassword": "Forgot Password | Crown Exchange",
+  "/emotionalEvaluation": "Emotional Evaluation | Crown Exchange",
+  "/verify": "Verify Email | Crown Exchange",
+  "/dashboard": "Dashboard | Crown Exchange",
+  "/passwordReset": "Password Reset | Crown Exchange"
+};
+
+const TitleUpdater = () => {
+  const location = useLocation();
+  useEffect(() => {
+    const defaultTitle = "Crown Exchange";
+    document.title = titleMap[location.pathname] || defaultTitle;
+  }, [location.pathname]);
+  return null;
+};
 
 const App = () => {
   useEffect(() => {
@@ -46,6 +72,7 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
+        <TitleUpdater />
         <Toaster
           position="top-center"
           toastOptions={{
@@ -57,7 +84,7 @@ const App = () => {
         />
         <ScrollToTop />
         <Routes>
-          {/* Public Routes - only accessible when NOT logged in */}
+          {/* Public Routes */}
           <Route
             path="/"
             element={
@@ -141,18 +168,27 @@ const App = () => {
           <Route
             path="/verify"
             element={
-              <PublicRoute>
+              <ProtectedRoute>
                 <Verify />
-              </PublicRoute>
+              </ProtectedRoute>
             }
           />
 
-          {/* Protected Route - only accessible when logged in */}
+          {/* Protected Route */}
           <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/passwordReset"
+            element={
+              <ProtectedRoute>
+                <ResetPassword />
               </ProtectedRoute>
             }
           />

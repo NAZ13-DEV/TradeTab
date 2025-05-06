@@ -1189,52 +1189,43 @@ class AdminGateway
     {
         $updateColoumn = ['transStatus', 'balance'];
         $createColumn = $this->createDbTables->createTable(depositTable, $updateColoumn);
-    
-        // 1. Get createdAt from frontend (e.g., via POST)
-        $createdAt = $_POST['createdAt'] ?? null;
-        if (!$createdAt) {
-            $errors[] = 'createdAt is required';
-            $this->response->respondUnprocessableEntity($errors);
-            return;
-        }
-    
-        // 2. Proceed with fetching deposit/user
         $fetchDepositWithIdcondition = ['id' => $id];
         $fetchDepositDetails = $this->gateway->fetchData(depositTable, $fetchDepositWithIdcondition);
-    
         if ($fetchDepositDetails) {
             $fetchUserWithIdcondition = ['id' => $fetchDepositDetails['userid']];
             $fetchUserDetails = $this->gateway->fetchData(RegTable, $fetchUserWithIdcondition);
-    
             if ($fetchUserDetails) {
                 $newBalance = (float) $fetchUserDetails['balance'] + (float) $fetchDepositDetails['amount'];
                 $userDepositAmt = (float) $fetchUserDetails['total_depo'] + (float) $fetchDepositDetails['amount'];
-    
                 $updateuserColoumn = ['balance', 'total_depo'];
                 $updateuserData = [$newBalance, $userDepositAmt];
                 $whereColumn = 'id';
-    
                 $updateUser = $this->conn->updateData($this->pdovar, RegTable, $updateuserColoumn, $updateuserData, $whereColumn, $fetchUserDetails['id']);
-    
-                if ($updateUser && $createColumn) {
-                    $updateData = ['Approved', $newBalance];
-                    $updated = $this->conn->updateData($this->pdovar, depositTable, $updateColoumn, $updateData, $whereColumn, $id);
-    
-                    if ($updated) {
-                        $h = 'Deposit Approved';
-                        $c = 'Your deposit request of ' . $fetchUserDetails['currency'] . '' . $fetchDepositDetails['amount'] . ' has been approved.';
-    
-                        // Use passed createdAt
-                        $message = $this->gateway->createNotificationMessage($fetchDepositDetails['userid'], $h, $c, $createdAt);
-                        if ($message) {
-                            $this->response->respondCreated("Deposit has been approved");
+                if ($updateUser) {
+
+                    if ($createColumn) {
+                        $updateData = ['Approved', $newBalance];
+                        $whereColumn = 'id';
+                        $updated = $this->conn->updateData($this->pdovar, depositTable, $updateColoumn, $updateData, $whereColumn, $id);
+                        if ($updated) {
+                            $h = 'Deposit Approved';
+                            $c = 'Your deposit request of ' . $fetchUserDetails['currency'] . '' . $fetchDepositDetails['amount'] . ' has been approved.';
+                            $message = $this->gateway->createNotificationMessage($fetchDepositDetails['userid'], $h, $c,$fetchDepositDetails['createdAt']);
+                            if ($message) {
+                                $this->response->respondCreated("Deposit has been approved");
+                            } else {
+                                $errors[] = 'could not insert message';
+                                if (!empty($errors)) {
+                                    $this->response->respondUnprocessableEntity($errors);
+                                    return;
+                                }
+                            }
                         } else {
-                            $errors[] = 'Could not insert message';
-                            $this->response->respondUnprocessableEntity($errors);
+                            $errors[] = 'error enabling Email Alert';
+                            if (!empty($errors)) {
+                                $this->response->respondUnprocessableEntity($errors);
+                            }
                         }
-                    } else {
-                        $errors[] = 'Error updating deposit status';
-                        $this->response->respondUnprocessableEntity($errors);
                     }
                 }
             }
@@ -1344,7 +1335,7 @@ class AdminGateway
 
                         $h = 'Deposit Disapproved';
                         $c = 'Your deposit request of ' . $fetchUserDetails['currency'] . '' . $fetchDepositDetails['amount'] . ' has been disapproved. reinitiate this deposit ';
-                        $message = $this->gateway->createNotificationMessage($fetchDepositDetails['userid'], $h, $c);
+                        $message = $this->gateway->createNotificationMessage($fetchDepositDetails['userid'], $h, $c,s: $fetchDepositDetails['createdAt']);
                         if ($message) {
                             $this->response->respondCreated("Deposit has been declined");
                         } else {

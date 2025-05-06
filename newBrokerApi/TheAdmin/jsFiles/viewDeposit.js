@@ -460,6 +460,8 @@ document.addEventListener('DOMContentLoaded', function () {
       transStatus: transStatus,
       dateOfTrans: dateOfTrans,
       userId: id,
+      createdAt: new Date().toLocaleString('en-US', {
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,}),
     };
     axios
       .put(`../api/task/editDeposit`, jsonData)

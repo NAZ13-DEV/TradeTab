@@ -35,7 +35,7 @@ const ForgotPasswordSection = () => {
         toast.success("Reset Link Has Been Sent Successfully");
         reset();
         setTimeout(() => {
-          navigate("/forgotten_sucess");
+          navigate("/verify");
         }, 3000);
       }
     } catch (error) {

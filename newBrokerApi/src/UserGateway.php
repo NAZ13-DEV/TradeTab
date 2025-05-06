@@ -1065,7 +1065,7 @@ class UserGateway
    
     public function saveTrade($data)
     {
-        // var_dump($data);
+        // var_dump($data,columns);
         $columns = [
             'amount' => 'VARCHAR(200) NULL DEFAULT NULL',
             'Symbol' => 'VARCHAR(200) NULL DEFAULT NULL',
@@ -1082,15 +1082,15 @@ class UserGateway
             'status' => 'VARCHAR(200) NULL DEFAULT NULL',
             'amt_earned' => 'VARCHAR(200) NULL DEFAULT NULL'
         ];
-        $data['dateo'] = date('d-m-Y h:i:s a', time());
+        $data['dateOc'] = date('d-m-Y h:i:s a', time());
         $data['trans_id'] = $this->gateway->genRandomAlphanumericstrings(10);
         $data['status'] = 'Pending';
         $data['amt_earned'] = null;
         $userid = $data['userId'];
-        $trading = $data['trading_pairs'];
+        $trading = $data['tradingPair'];
         $amt = $data['amount'];
         $sell_pair = $data['symbol'];
-        $duration = $data['Intervah'];
+        $duration = $data['interval'];
         $leverage = $data['leverage'];
         $takeprofit = $data['takeProfit'];
         $EntryPrice = $data['entryPrice'];
@@ -1232,6 +1232,7 @@ class UserGateway
             }
         }
     }
+
 
     public function changePassword($verifyResetPassword)
     {

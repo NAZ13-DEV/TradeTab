@@ -1,19 +1,26 @@
+import Navbar from "../components/Navbar";
+import FooterTwo from "../components/FooterTwo";
 
 const Verify = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-Primary-bg">
-      <div>
-        <h3 className="text-white text-2xl lg:text-[32px] font-semibold leading-[38px] mt-6 text-center">
-          Verify Your Email Address
-        </h3>
-        <p className="w-full lg:w-[610px] text-customGreen text-lg leading-[27px] mt-[17px] mx-auto text-center">
-          Your Registration was successful, Kindly verify your email address
-        </p>
-        <div className="text-center">
-          <div className="w-[190px] mx-auto rounded-lg px-2 py-1 mt-8 bg-gradient-to-r from-[#00bdff] to-[#00bdff] animate-gradient"></div>
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-[#0f172a] flex items-center justify-center px-4">
+        <div className="max-w-xl text-center">
+          <h1 className="mb-4 text-3xl font-semibold lg:text-4xl text-emerald-400">
+            Check Your Email 📬
+          </h1>
+          <p className="text-base leading-relaxed text-gray-300 lg:text-lg">
+            A password reset link has been sent to your email address. Please check your inbox and follow the instructions to reset your password.
+          </p>
+
+          <div className="flex justify-center mt-10">
+            <div className="w-[200px] h-2 rounded-lg bg-gradient-to-r from-emerald-500 to-blue-700 animate-pulse" />
+          </div>
         </div>
       </div>
-    </div>
+      <FooterTwo />
+    </>
   );
 };
 
