@@ -55,20 +55,20 @@ const ForexPair = ({
     return {
       amount: fields.amount,
       symbol: fields.symbol,             // for PHP logic
-      Symbol: fields.symbol,             // for DB
+      // Symbol: fields.symbol,             // for DB
       interval: fields.interval,         // for PHP logic ($data['interval'])
-      Intervah: fields.interval,         // for DB insert
-      Leverage: fields.leverage,
-      stploss: fields.stopLoss,
-      takeprofit: fields.takeProfit,
-      EntryPrice: fields.entryPrice,
+      // Intervah: fields.interval,         // for DB insert
+      leverage: fields.leverage,
+      stopLoss: fields.stopLoss,
+      takeProfit: fields.takeProfit,
+      entryPrice: fields.entryPrice,
       tradeType: fields.tradeType,
       tradingPair: fields.tradingPair,      // for PHP logic
-      trading_pairs: fields.tradingPair,    // for DB insert
+      // trading_pairs: fields.tradingPair,    // for DB insert
       userId: fields.userId,
       trade: fields.trade || null,
-      dateo: new Date().toLocaleString('en-US', {
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,}),
+      // dateo: new Date().toLocaleString('en-US', {
+      //   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,}),
     };
     
     

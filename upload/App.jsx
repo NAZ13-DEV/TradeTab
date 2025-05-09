@@ -1,3 +1,6 @@
+//replace this file with App.jsx
+// the image in the /upload/img add it to the src/img to make it work.
+
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import AOS from "aos";

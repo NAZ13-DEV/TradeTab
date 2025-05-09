@@ -1065,7 +1065,7 @@ class UserGateway
    
     public function saveTrade($data)
     {
-        // var_dump($data,columns);
+        
         $columns = [
             'amount' => 'VARCHAR(200) NULL DEFAULT NULL',
             'Symbol' => 'VARCHAR(200) NULL DEFAULT NULL',
@@ -1098,6 +1098,8 @@ class UserGateway
         $type = $data['tradeType'];
         $tradeId = $data['trade'] ?? null;
         unset($data['trade']);
+
+        var_dump($data,$columns);
         $fetchUser = $this->gateway->getUserIdFromUserTable(RegTable, $userid);
         // var_dump($data, $columns);
         $balance = $fetchUser['balance'] - $amt;
